@@ -2,8 +2,8 @@
 //************************************************************//
 //************************************************************//
 //************** Alumno (s): *********************************//
-//*************											******//
-//*************											******//
+//*************	 Hernández González Ricardo Omar	    ******//
+//*************										    ******//
 //************************************************************//
 #include "Main.h"
 
@@ -99,16 +99,19 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+
+	/*--------------------------------------------- AMOR Y PAZ ------------------------------------------------------*/
 	//rotación mano
-	/*glTranslatef(0.0f, 0.0f, -10);
+	glTranslatef(0.0f, 0.0f, -10);
 	glRotatef(90, 0, 0, 1);
-	glRotatef(180, 1, 0, 0);*/
+	glRotatef(180, 1, 0, 0);
 
 	//Equivalente a la otra rotación
-	glTranslatef(0.0f, 0.0f, -10);
+	/*glTranslatef(0.0f, 0.0f, -10);
 	glRotatef(180, 1, 0, 0);
-	glRotatef(270, 0, 0, 1);
+	glRotatef(270, 0, 0, 1);*/
 
+	/* Prueba de ejes
 	glBegin(GL_LINES);
 	glVertex3f(0,0,0);
 	glVertex3f(100,0,0);
@@ -116,19 +119,17 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glVertex3f(0,100,0);
 	glVertex3f(0,0,0);
 	glVertex3f(0,0,100);
-
-	glEnd();
-
+	glEnd();*/
 
 
-	//------------------- Palma --------------------
+	//------------------- Palma -------------------------
 	glPushMatrix(); // stack palma
 	glTranslatef(-2.0f, 0.0f, transZ); // Traslación para la palma
 	glScalef(2, 4, 2);
 	prisma();           // Dibujar palm
 	glPopMatrix(); // Sale del stack de la palma
 
-	//-------------------Dedo medio--------------------
+	//------------------- Dedo medio --------------------
 	glPushMatrix(); //Falange
 	glTranslatef(-0.25f, 0.2f, transZ);
 	glScalef(1.5, 0.75, 2.0);
@@ -150,7 +151,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	prisma();
 	glPopMatrix(); // Sale del stack de la falangeta
 
-	//-------------------Dedo anular--------------------
+	//------------------- Dedo anular --------------------
 	glPushMatrix(); //Falange
 	glTranslatef(-0.25f, -0.7f, transZ);
 	glScalef(1.5, 0.75, 2.0);
@@ -172,7 +173,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	prisma();
 	glPopMatrix(); // Sale del stack de la falangeta
 
-	//-------------------Dedo meñique--------------------
+	//------------------- Dedo meñique --------------------
 	glPushMatrix(); //Falange
 	glTranslatef(-0.25f, -1.6f, transZ);
 	glScalef(1.5, 0.75, 2.0);
@@ -194,7 +195,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	prisma();
 	glPopMatrix(); // Sale del stack de la falangeta
 
-	//-------------------Dedo indice--------------------
+	//------------------- Dedo indice --------------------
 	glPushMatrix(); //Falange
 	glTranslatef(-0.25f, 1.1f, transZ);
 	glScalef(1.5, 0.75, 2.0);
@@ -216,7 +217,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	prisma();
 	glPopMatrix(); // Sale del stack de la falangeta
 
-	//-------------------Dedo gordo--------------------
+	//------------------- Dedo gordo ----------------------
 	glPushMatrix(); //Falange
 	glTranslatef(-2.0f, 2.5f, transZ);
 	glScalef(1.0, 1.0, 2.0);
