@@ -100,18 +100,17 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glLoadIdentity();
 
 
-	/*--------------------------------------------- AMOR Y PAZ ------------------------------------------------------*/
-	//rotación mano
-	glTranslatef(0.0f, 0.0f, -10);
+	//Rotación mano
+	/*glTranslatef(0.0f, 0.0f, -10);
 	glRotatef(90, 0, 0, 1);
-	glRotatef(180, 1, 0, 0);
+	glRotatef(180, 1, 0, 0);*/
 
 	//Equivalente a la otra rotación
-	/*glTranslatef(0.0f, 0.0f, -10);
+	glTranslatef(0.0f, 0.0f, -10.0f);
 	glRotatef(180, 1, 0, 0);
-	glRotatef(270, 0, 0, 1);*/
+	glRotatef(270, 0, 0, 1);
 
-	/* Prueba de ejes
+	//Prueba de ejes
 	glBegin(GL_LINES);
 	glVertex3f(0,0,0);
 	glVertex3f(100,0,0);
@@ -119,7 +118,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glVertex3f(0,100,0);
 	glVertex3f(0,0,0);
 	glVertex3f(0,0,100);
-	glEnd();*/
+	glEnd();
 
 
 	//------------------- Palma -------------------------
