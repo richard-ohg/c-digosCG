@@ -170,7 +170,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glPopMatrix(); // Sale del stack de la falange
 	glPopMatrix();
 
-
 	glPushMatrix();
 	glTranslatef(1.5, 0.0, -11.0);
 	glRotatef(180, 0, 1, 0);
@@ -190,9 +189,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glPopMatrix();
 
 	//------------------- Dedo meñique --------------------
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	glRotatef(0, 0, 0, 0);
 	glPushMatrix(); //Falange
 	glTranslatef(-0.25f, -1.6f, transZ);
 	glScalef(1.5, 0.75, 2.0);
@@ -213,12 +209,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glRotatef(90, 0, 1, 0);
 	prisma();
 	glPopMatrix(); // Sale del stack de la falangeta
-	glPopMatrix();
 
 	//------------------- Dedo indice --------------------
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	glRotatef(0, 0, 0, 0);
 	glPushMatrix(); //Falange
 	glTranslatef(-0.25f, 1.1f, transZ);
 	glScalef(1.5, 0.75, 2.0);
@@ -239,7 +231,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glRotatef(270, 1, 0, 0);
 	prisma();
 	glPopMatrix(); // Sale del stack de la falangeta
-	glPopMatrix();
 
 	//------------------- Dedo gordo ----------------------
 	glPushMatrix(); //Falange
