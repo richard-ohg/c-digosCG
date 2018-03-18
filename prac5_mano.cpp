@@ -2,7 +2,7 @@
 //************************************************************//
 //************************************************************//
 //************** Alumno (s): *********************************//
-//*************											******//
+//*************	Hernández González Ricardo Omar     	******//
 //*************											******//
 //************************************************************//
 #include "Main.h"
@@ -25,6 +25,9 @@ float giroArt23 = 0.0f;
 float giroNudillo4 = 0.0f;
 float giroArt14 = 0.0f;
 float giroArt24 = 0.0f;
+float giroNudillo5 = 0.0f;
+float giroArt15 = 0.0f;
+float giro = 0.0f;
 
 GLfloat Position[]= { 0.0f, 3.0f, 0.0f, 1.0f };			// Light Position
 GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
@@ -127,6 +130,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	// Palma
 	glPushMatrix(); // stack palma
 	glTranslatef(-2.0f, 0.0f, transZ); // Traslación para la palma
+	glRotatef(giro, 1, 0, 0); //giro en mano completa
 	
 	glPushMatrix();// Nudillo 1
 		glTranslatef(1.5f, 1.5f, 0.0f);
@@ -298,15 +302,15 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	//---------------------------------------------------------------------------------
 
 	glPushMatrix();// Nudillo 5
-		glTranslatef(0.0f, 2.5f, -0.5f);
-		glRotatef(giroNudillo4, 0, 0, 1);
+		glTranslatef(0.0f, 2.5f, 0.0f);
+		glRotatef(giroNudillo5, 0, 0, 1);
 
 		glPushMatrix(); //Falange 5
 			glTranslatef(0.0f, 1.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 5
 				glTranslatef(0.0f, 1.0f, 0.0f);
-				glRotatef(giroArt14, 0, 0, 1);
+				glRotatef(giroArt15, 0, 0, 1);
 
 				glPushMatrix();//falangina 5
 					glTranslatef(0.0f, 1.0f, 0.0f);
@@ -420,6 +424,18 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'p':
 		case 'P':
 			giroArt24 += 10.0f;
+			break;
+		case 'k':
+		case 'K':
+			giroNudillo5 += 10.0f;
+			break;
+		case 'l':
+		case 'L':
+			giroArt15 += 10.0f;
+			break;
+		case 'j':
+		case 'J':
+			giro += 10.0f;
 			break;
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
