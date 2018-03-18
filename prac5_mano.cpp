@@ -123,6 +123,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	// ------------------- Comienza dibujo ---------------------
 	// Palma
 	glPushMatrix(); // stack palma
 	glTranslatef(-2.0f, 0.0f, transZ); // Traslación para la palma
@@ -170,217 +171,167 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	//-----------------------------------------------------------------
 
 	glPushMatrix();// Nudillo 2
-	glTranslatef(1.5f, 0.5f, 0.0f);
-	glRotatef(giroNudillo2, 0, 0, 1);
+		glTranslatef(1.5f, 0.5f, 0.0f);
+		glRotatef(giroNudillo2, 0, 0, 1);
 
-	glPushMatrix(); //Falange 1
-	glTranslatef(1.05f, 0.0f, 0.0f);
+		glPushMatrix(); //Falange 2
+			glTranslatef(1.05f, 0.0f, 0.0f);
 
-	glPushMatrix(); //Articulacion 1 dedo 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glRotatef(giroArt12, 0, 0, 1);
+			glPushMatrix(); //Articulacion 1 dedo 2
+				glTranslatef(1.0f, 0.0f, 0.0f);
+				glRotatef(giroArt12, 0, 0, 1);
 
-	glPushMatrix();//falangina 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
+				glPushMatrix();//falangina 2
+					glTranslatef(1.0f, 0.0f, 0.0f);
 
-	glPushMatrix(); //Articulacion 2 dedo 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glRotatef(giroArt22, 0, 0, 1);
+					glPushMatrix(); //Articulacion 2 dedo 2
+						glTranslatef(1.0f, 0.0f, 0.0f);
+						glRotatef(giroArt22, 0, 0, 1);
 
-	glPushMatrix();//falangeta 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glScalef(2.0, 0.5, 2.0);
-	glRotatef(180, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+						glPushMatrix();//falangeta 2
+							glTranslatef(1.0f, 0.0f, 0.0f);
+							glScalef(2.0, 0.5, 2.0);
+							glRotatef(180, 1, 0, 0);
+							prisma();
+						glPopMatrix();
 
-	glPopMatrix();
-	glScalef(2.0, .75, 2.0);
-	glRotatef(180, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+					glPopMatrix();
+					glScalef(2.0, .75, 2.0);
+					glRotatef(180, 1, 0, 0);
+					prisma();
+				glPopMatrix();
 
-	glPopMatrix();
+			glPopMatrix();
 
-	glScalef(2.0, 1.0, 2.0);
-	glRotatef(180, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+			glScalef(2.0, 1.0, 2.0);
+			glRotatef(180, 1, 0, 0);
+			prisma();
+		glPopMatrix();
 
-	glPopMatrix(); // Sale del stack de la falange 1
+	glPopMatrix(); // Sale del stack de la falange 2
 
 	//-----------------------------------------------------------------
 
 	glPushMatrix();// Nudillo 3
-	glTranslatef(1.5f, -0.5f, 0.0f);
-	glRotatef(giroNudillo3, 0, 0, 1);
+		glTranslatef(1.5f, -0.5f, 0.0f);
+		glRotatef(giroNudillo3, 0, 0, 1);
 
-	glPushMatrix(); //Falange 1
-	glTranslatef(1.05f, 0.0f, 0.0f);
+		glPushMatrix(); //Falange 3
+			glTranslatef(1.05f, 0.0f, 0.0f);
 
-	glPushMatrix(); //Articulacion 1 dedo 3
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glRotatef(giroArt13, 0, 0, 1);
+			glPushMatrix(); //Articulacion 1 dedo 3
+				glTranslatef(1.0f, 0.0f, 0.0f);
+				glRotatef(giroArt13, 0, 0, 1);
 
-	glPushMatrix();//falangina 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
+				glPushMatrix();//falangina 3
+					glTranslatef(1.0f, 0.0f, 0.0f);
 
-	glPushMatrix(); //Articulacion 2 dedo 3
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glRotatef(giroArt23, 0, 0, 1);
+					glPushMatrix(); //Articulacion 2 dedo 3
+						glTranslatef(1.0f, 0.0f, 0.0f);
+						glRotatef(giroArt23, 0, 0, 1);
 
-	glPushMatrix();//falangeta 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glScalef(2.0, 0.5, 2.0);
-	glRotatef(270, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+						glPushMatrix();//falangeta 3
+						glTranslatef(1.0f, 0.0f, 0.0f);
+						glScalef(2.0, 0.5, 2.0);
+						glRotatef(270, 1, 0, 0);
+						prisma();
+						glPopMatrix();
 
-	glPopMatrix();
-	glScalef(2.0, .75, 2.0);
-	glRotatef(270, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+					glPopMatrix();
+					glScalef(2.0, .75, 2.0);
+					glRotatef(270, 1, 0, 0);
+					prisma();
+				glPopMatrix();
 
-	glPopMatrix();
+			glPopMatrix();
 
-	glScalef(2.0, 1.0, 2.0);
-	glRotatef(270, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+			glScalef(2.0, 1.0, 2.0);
+			glRotatef(270, 1, 0, 0);
+			prisma();
+		glPopMatrix();
 
-	glPopMatrix(); // Sale del stack de la falange 1
+	glPopMatrix(); // Sale del stack de la falange 3
 	
 
 	//-----------------------------------------------------------------
 
 	glPushMatrix();// Nudillo 4
-	glTranslatef(1.5f, -1.5f, 0.0f);
-	glRotatef(giroNudillo4, 0, 0, 1);
+		glTranslatef(1.5f, -1.5f, 0.0f);
+		glRotatef(giroNudillo4, 0, 0, 1);
 
-	glPushMatrix(); //Falange 1
-	glTranslatef(1.05f, 0.0f, 0.0f);
+		glPushMatrix(); //Falange 4
+			glTranslatef(1.05f, 0.0f, 0.0f);
 
-	glPushMatrix(); //Articulacion 1 dedo 4
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glRotatef(giroArt14, 0, 0, 1);
+			glPushMatrix(); //Articulacion 1 dedo 4
+				glTranslatef(1.0f, 0.0f, 0.0f);
+				glRotatef(giroArt14, 0, 0, 1);
 
-	glPushMatrix();//falangina 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
+				glPushMatrix();//falangina 4
+					glTranslatef(1.0f, 0.0f, 0.0f);
 
-	glPushMatrix(); //Articulacion 2 dedo 4
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glRotatef(giroArt24, 0, 0, 1);
+					glPushMatrix(); //Articulacion 2 dedo 4
+						glTranslatef(1.0f, 0.0f, 0.0f);
+						glRotatef(giroArt24, 0, 0, 1);
 
-	glPushMatrix();//falangeta 1
-	glTranslatef(1.0f, 0.0f, 0.0f);
-	glScalef(2.0, 0.5, 2.0);
-	glRotatef(90, 0, 1, 0);
-	prisma();
-	glPopMatrix();
+						glPushMatrix();//falangeta 4
+							glTranslatef(1.0f, 0.0f, 0.0f);
+							glScalef(2.0, 0.5, 2.0);
+							glRotatef(90, 0, 1, 0);
+							prisma();
+						glPopMatrix();
 
-	glPopMatrix();
-	glScalef(2.0, .75, 2.0);
-	glRotatef(90, 0, 1, 0);
-	prisma();
-	glPopMatrix();
+					glPopMatrix();
+					glScalef(2.0, .75, 2.0);
+					glRotatef(90, 0, 1, 0);
+					prisma();
+				glPopMatrix();
 
-	glPopMatrix();
+			glPopMatrix();
 
-	glScalef(2.0, 1.0, 2.0);
-	glRotatef(90, 0, 1, 0);
-	prisma();
-	glPopMatrix();
+			glScalef(2.0, 1.0, 2.0);
+			glRotatef(90, 0, 1, 0);
+			prisma();
+		glPopMatrix();
 
-	glPopMatrix(); // Sale del stack de la falange 1
+	glPopMatrix(); // Sale del stack de la falange 4
 
+	//---------------------------------------------------------------------------------
 
+	glPushMatrix();// Nudillo 5
+		glTranslatef(0.0f, 2.5f, -0.5f);
+		glRotatef(giroNudillo4, 0, 0, 1);
 
-	/*
-	glPushMatrix(); //Falange 2
-	glTranslatef(2.55f, .5f, 0.0f);
+		glPushMatrix(); //Falange 5
+			glTranslatef(0.0f, 1.0f, 0.0f);
 
-	glPushMatrix();//falangina 2
-	glTranslatef(2.0f, 0.0f, 0.0f);
+			glPushMatrix(); //Articulacion 1 dedo 5
+				glTranslatef(0.0f, 1.0f, 0.0f);
+				glRotatef(giroArt14, 0, 0, 1);
 
-	glPushMatrix();//falangeta 2
-	glTranslatef(2.0f, 0.0f, 0.0f);
-	glScalef(2.0, .5, 2.0);
-	glRotatef(180, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+				glPushMatrix();//falangina 5
+					glTranslatef(0.0f, 1.0f, 0.0f);
+					glScalef(0.75, 2.0, 2.0);
+					glRotatef(180, 0, 1, 0);
+					prisma();
+				glPopMatrix();
 
-	glScalef(2.0, .75, 2.0);
-	glRotatef(180, 1, 0, 0);
-	prisma();
-	glPopMatrix();
+			glPopMatrix();
 
+			glScalef(1.0, 2.0, 2.0);
+			glRotatef(180, 0, 1, 0);
+			prisma();
+		glPopMatrix();
 
-	glScalef(2.0, 1.0, 2.0);
-	glRotatef(180, 1, 0, 0);
-	prisma();
-	glPopMatrix(); // Sale del stack de la falange2
-
-	glPushMatrix(); //Falange 3
-	glTranslatef(2.55f, -0.5f, 0.0f);
-
-	glPushMatrix();//falangina 3
-	glTranslatef(2.0f, 0.0f, 0.0f);
-
-	glPushMatrix();//falangeta 3
-	glTranslatef(2.0f, 0.0f, 0.0f);
-	glScalef(2.0, .5, 2.0);
-	glRotatef(270, 1, 0, 0);
-	prisma();
-	glPopMatrix();
-
-	glScalef(2.0, .75, 2.0);
-	glRotatef(270, 1, 0, 0);
-	prisma();
-	glPopMatrix();
-
-
-
-	glScalef(2.0, 1.0, 2.0);
-	glRotatef(270, 1, 0, 0);
-	prisma();
-	glPopMatrix(); // Sale del stack de la falange3
-
-	glPushMatrix(); //Falange 4
-	glTranslatef(2.55f, -1.5f, 0.0f);
-
-	glPushMatrix();//falangina 4
-	glTranslatef(2.0f, 0.0f, 0.0f);
-
-	glPushMatrix();//falangeta 4
-	glTranslatef(2.0f, 0.0f, 0.0f);
-	glScalef(2.0, .5, 2.0);
-	glRotatef(90, 0, 1, 0);
-	prisma();
-	glPopMatrix();
-
-	glScalef(2.0, .75, 2.0);
-	glRotatef(90, 0, 1, 0);
-	prisma();
-	glPopMatrix();
-
-
-
-	glScalef(2.0, 1.0, 2.0);
-	glRotatef(90, 0, 1, 0);
-	prisma();
-	glPopMatrix(); // Sale del stack de la falange4
-	*/
+	glPopMatrix(); // Sale del stack de la falange 5
 
 	glScalef(3, 5, 1);
-	prisma();           // Dibujar palma
+	prisma();  // Dibujar palma
 	glPopMatrix(); // Sale del stack de la palma 
 
-	//			   //fin dibujo
+	//fin dibujo
 
 	
-	glutSwapBuffers ( );
-  // Swap The Buffers
+	glutSwapBuffers ( ); // Swap The Buffers
 }
 
 void reshape ( int width , int height )   // Creamos funcion Reshape
