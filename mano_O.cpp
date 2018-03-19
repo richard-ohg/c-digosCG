@@ -27,7 +27,9 @@ float giroArt14 = 0.0f;
 float giroArt24 = 0.0f;
 float giroNudillo5 = 0.0f;
 float giroArt15 = 0.0f;
-float giro = 0.0f;
+float giroX = 0.0f;
+float giroY = 0.0f;
+float giroZ = 0.0f;
 
 GLfloat Position[]= { 0.0f, 3.0f, 0.0f, 1.0f };			// Light Position
 GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
@@ -130,25 +132,30 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	// Palma
 	glPushMatrix(); // stack palma
 	glTranslatef(-2.0f, 0.0f, transZ); // Traslación para la palma
-	glRotatef(giro, 1, 0, 0); //giro en mano completa
+	glRotatef(giroX, 1, 0, 0); //giro en mano completa
+	glRotatef(giroY, 0, 1, 0); //giro en mano completa
+	glRotatef(giroZ, 0, 0, 1); //giro en mano completa
+	glRotatef(90, 0, 1, 0);
+	glRotatef(90, 0, 0, 1);
+
 	
 	glPushMatrix();// Nudillo 1
 		glTranslatef(1.5f, 1.5f, 0.0f);
-		glRotatef(giroNudillo1, 0, 0, 1);
+		glRotatef(giroNudillo1, 0, 1, 0);
 
 		glPushMatrix(); //Falange 1
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 1
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt11, 0, 0, 1);
+				glRotatef(giroArt11, 0, 1, 0);
 
 				glPushMatrix();//falangina 1
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 1
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt21, 0, 0, 1);
+						glRotatef(giroArt21, 0, 1, 0);
 
 						glPushMatrix();//falangeta 1
 							glTranslatef(1.0f, 0.0f, 0.0f);
@@ -176,21 +183,21 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 2
 		glTranslatef(1.5f, 0.5f, 0.0f);
-		glRotatef(giroNudillo2, 0, 0, 1);
+		glRotatef(giroNudillo2, 0, 1, 0);
 
 		glPushMatrix(); //Falange 2
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 2
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt12, 0, 0, 1);
+				glRotatef(giroArt12, 0, 1, 0);
 
 				glPushMatrix();//falangina 2
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 2
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt22, 0, 0, 1);
+						glRotatef(giroArt22, 0, 1, 0);
 
 						glPushMatrix();//falangeta 2
 							glTranslatef(1.0f, 0.0f, 0.0f);
@@ -218,21 +225,21 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 3
 		glTranslatef(1.5f, -0.5f, 0.0f);
-		glRotatef(giroNudillo3, 0, 0, 1);
+		glRotatef(giroNudillo3, 0, 1, 0);
 
 		glPushMatrix(); //Falange 3
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 3
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt13, 0, 0, 1);
+				glRotatef(giroArt13, 0, 1, 0);
 
 				glPushMatrix();//falangina 3
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 3
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt23, 0, 0, 1);
+						glRotatef(giroArt23, 0, 1, 0);
 
 						glPushMatrix();//falangeta 3
 						glTranslatef(1.0f, 0.0f, 0.0f);
@@ -261,21 +268,21 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 4
 		glTranslatef(1.5f, -1.5f, 0.0f);
-		glRotatef(giroNudillo4, 0, 0, 1);
+		glRotatef(giroNudillo4, 0, 1, 0);
 
 		glPushMatrix(); //Falange 4
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 4
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt14, 0, 0, 1);
+				glRotatef(giroArt14, 0, 1, 0);
 
 				glPushMatrix();//falangina 4
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 4
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt24, 0, 0, 1);
+						glRotatef(giroArt24, 0, 1, 0);
 
 						glPushMatrix();//falangeta 4
 							glTranslatef(1.0f, 0.0f, 0.0f);
@@ -303,6 +310,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 5
 		glTranslatef(0.0f, 2.5f, 0.0f);
+		glRotatef(270, 1, 0, 0);
 		glRotatef(giroNudillo5, 0, 0, 1);
 
 		glPushMatrix(); //Falange 5
@@ -310,7 +318,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 			glPushMatrix(); //Articulacion 1 dedo 5
 				glTranslatef(0.0f, 1.0f, 0.0f);
-				glRotatef(giroArt15, 0, 0, 1);
+				glRotatef(giroArt15, 1, 0, 0);
 
 				glPushMatrix();//falangina 5
 					glTranslatef(0.0f, 1.0f, 0.0f);
@@ -427,15 +435,23 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			break;
 		case 'k':
 		case 'K':
-			giroNudillo5 += 10.0f;
+			giroNudillo5 -= 10.0f;
 			break;
 		case 'l':
 		case 'L':
 			giroArt15 += 10.0f;
 			break;
+		case 'g':
+		case 'G':
+			giroX += 10.0f;
+			break;
+		case 'h':
+		case 'H':
+			giroY += 10.0f;
+			break;
 		case 'j':
 		case 'J':
-			giro += 10.0f;
+			giroZ += 10.0f;
 			break;
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
