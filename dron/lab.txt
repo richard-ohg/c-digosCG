@@ -1,0 +1,245 @@
+
+void dibujaDomoCielo(float radio, int paralelos, int meridianos, int modoRender)
+{
+	float ang1, ang2;
+	float a[3], b[3], c[3], d[3];
+	float delta1, delta2;
+
+	delta1 = 180.0f / paralelos;
+	delta2 = 360.0f / meridianos;
+
+	//Semiesfera superior (y positivos)
+	for (int i = 0; i < paralelos / 2; i++)
+	{
+		for (int j = 0; j <= meridianos; j++)
+		{
+			ang1 = i*delta1;
+			ang2 = j*delta2;
+			a[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			a[1] = radio*(float)sin(ang1*PI / 180.0f);
+			a[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+
+			ang1 = (i + 1)*delta1;
+			ang2 = j*delta2;
+			b[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			b[1] = radio*(float)sin(ang1*PI / 180.0f);
+			b[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+			ang1 = (i + 1)*delta1;
+			ang2 = (j + 1)*delta2;
+			c[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			c[1] = radio*(float)sin(ang1*PI / 180.0f);
+			c[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+			ang1 = i*delta1;
+			ang2 = (j + 1)*delta2;
+			d[0] = radio*(float)cos(ang1*PI / 180.0f)*(float)cos(ang2*PI / 180.0f);
+			d[1] = radio*(float)sin(ang1*PI / 180.0f);
+			d[2] = radio*(float)cos(ang1*PI / 180.0f)*(float)sin(ang2*PI / 180.0f);
+
+			glColor3f(1.0f, 1.0f, 1.0f);
+
+			if (modoRender == 1) glBegin(GL_QUADS);// sólido
+			else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+			glVertex3f(a[0], a[1], a[2]);
+			glVertex3f(d[0], d[1], d[2]);
+			glVertex3f(c[0], c[1], c[2]);
+			glVertex3f(b[0], b[1], b[2]);
+			glEnd();
+
+		}
+	}
+}
+
+void dibujaCilindro(float radio, int lados, float altura, int modoRender)
+{
+	float ang;
+	float a[3], b[3], c[3], d[3];
+	float delta;
+	
+	CVector normalVert[4];	//se agrego esta linea
+	
+	
+	delta = 360.0f / lados;
+	for (int i = 1; i <= lados; i++) 
+	{
+	
+		ang = i*delta;
+		a[0] = radio*(float)cos(ang*PI / 180.0f);
+		a[1] = 0.0f;
+		a[2] = radio*(float)sin(ang*PI / 180.0f);
+
+		b[0] = a[0];
+		b[1] = altura;
+		b[2] = a[2];
+
+		ang = (i + 1)*delta;
+		c[0] = radio*(float)cos(ang*PI / 180.0f);
+		c[1] = altura;
+		c[2] = radio*(float)sin(ang*PI / 180.0f);
+
+		d[0] = c[0];
+		d[1] = 0.0;
+		d[2] = c[2];
+
+		glColor3f(0.7, 0.0, 0.0);
+
+	//Cálculo de las normales
+		normalVert[0] = CVector(a[0], a[1], a[2]) - CVector(0.0f, 0.0f, 0.0f);
+		normalVert[1] = CVector(b[0], b[1], b[2]) - CVector(0.0f, altura, 0.0f);
+		normalVert[2] = CVector(c[0], c[1], c[2]) - CVector(0.0f, altura, 0.0f);
+		normalVert[3] = CVector(d[0], d[1], d[2]) - CVector(0.0f, 0.0f, 0.0f);
+
+		if (modoRender == 1) glBegin(GL_QUADS);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(normalVert[0].x, normalVert[0].y, normalVert[0].z);
+		glVertex3f(a[0], a[1], a[2]);
+		glNormal3f(normalVert[1].x, normalVert[1].y, normalVert[1].z);
+		glVertex3f(b[0], b[1], b[2]);
+		glNormal3f(normalVert[2].x, normalVert[2].y, normalVert[2].z);
+		glVertex3f(c[0], c[1], c[2]);
+		glNormal3f(normalVert[3].x, normalVert[3].y, normalVert[3].z);
+		glVertex3f(d[0], d[1], d[2]);
+		glEnd();
+
+		glBegin(GL_TRIANGLES);
+		glNormal3f(0.0, 1.0, 0.0);
+		glVertex3f(b[0], b[1], b[2]);
+		glVertex3f(0, altura, 0);
+		glVertex3f(c[0], c[1], c[2]);
+		glEnd();
+
+		glBegin(GL_TRIANGLES);
+		glNormal3f(0.0, -1.0, 0.0);
+		glVertex3f(a[0], a[1], a[2]);
+		glVertex3f(d[0], d[1], d[2]);
+		glVertex3f(0, 0, 0);
+		glEnd();
+
+
+		//*********
+	}
+	glColor3f(1.0,1.0,1.0);
+}
+//para un cono
+void dibujaCilindro2(float radio, float radio2, int lados, float altura, int modoRender) {
+	float ang;
+	float a[3], b[3], c[3], d[3];
+	float delta;
+	delta = 360.0f / lados;
+	CVector vectores[3];	//se agrego esta linea
+
+	for (int i = 1; i <= lados; i++) {
+		
+		ang = i*delta;
+		a[0] = radio2*(float)cos(ang*PI / 180.0f);
+		a[1] = -altura / 2;
+		a[2] = radio2*(float)sin(ang*PI / 180.0f);
+
+		b[0] = radio*(float)cos(ang*PI / 180.0f);
+		b[1] = altura / 2;
+		b[2] = radio*(float)sin(ang*PI / 180.0f);
+
+		ang = (i + 1)*delta;
+		c[0] = radio*(float)cos(ang*PI / 180.0f);
+		c[1] = altura / 2;
+		c[2] = radio*(float)sin(ang*PI / 180.0f);
+
+		d[0] = radio2*(float)cos(ang*PI / 180.0f);
+		d[1] = -altura / 2;
+		d[2] = radio2*(float)sin(ang*PI / 180.0f);
+
+		//calcular normal
+		vectores[0] = CVector(b[0], b[1], b[2]) - CVector(a[0], a[1], a[2]);
+		vectores[1] = CVector(d[0], d[1], d[2]) - CVector(a[0], a[1], a[2]);
+
+		vectores[2].x = vectores[0].y * vectores[1].z - vectores[1].y * vectores[0].z;
+		vectores[2].y = vectores[1].x * vectores[0].z - vectores[0].x * vectores[1].z;
+		vectores[2].z = vectores[0].x * vectores[1].y - vectores[1].x * vectores[0].y;
+11		
+		if (modoRender == 1) glBegin(GL_QUADS);// sólido
+		else if (modoRender == 2) glBegin(GL_LINE_LOOP);// alambrado
+		glNormal3f(vectores[2].x, vectores[2].y, vectores[2].z);
+			glVertex3f(a[0], a[1], a[2]);
+			glVertex3f(b[0], b[1], b[2]);
+			glVertex3f(c[0], c[1], c[2]);
+			glVertex3f(d[0], d[1], d[2]);
+		glEnd();
+
+		glBegin(GL_TRIANGLES);
+		//glNormal3f(0.0, 1.0, 0.0);
+			glVertex3f(b[0], b[1], b[2]);
+			glVertex3f(0, altura / 2, 0);
+			glVertex3f(c[0], c[1], c[2]);
+		glEnd();
+
+		glBegin(GL_TRIANGLES);
+		//glNormal3f(0.0, -1.0, 0.0);
+			glVertex3f(a[0], a[1], a[2]);
+			glVertex3f(d[0], d[1], d[2]);
+			glVertex3f(0, -altura / 2, 0);
+		glEnd();
+
+	}
+
+	glColor3f(1.0, 1.0, 1.0);
+}
+
+void dibujaCono() {
+	dibujaCilindro2(0.5,2.0,20,5.0,1);
+	glPushMatrix();
+		glTranslatef(0.0,-2.5,0.0);
+		dibujaCilindro(3.0,4.0,0.5,1);
+	glPopMatrix();
+}
+
+
+void habitacion(float alto, float ancho, float largo)
+{
+	glBegin(GL_QUADS);
+	glColor3f(1, 0, 0);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(0.0f, alto, 0.0f);	//cara superior
+	glVertex3f(largo, alto, 0.0f);
+	glVertex3f(largo, alto, ancho);
+	glVertex3f(0.0f, alto, ancho);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glColor3f(1, 1, 0);
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);	//base
+	glVertex3f(0.0f, 0.0f, ancho);
+	glVertex3f(largo, 0.0f, ancho);
+	glVertex3f(largo, 0.0f, 0.0f);
+
+	glColor3f(0, 1, 1);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);	//cara izq
+	glVertex3f(0.0f, alto, 0.0f);
+	glVertex3f(0.0f, alto, ancho);
+	glVertex3f(0.0f, 0.0f, ancho);
+
+	glColor3f(0, 0, 1);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 0.0f, ancho);	//cara frontal
+	glVertex3f(0.0f, alto, ancho);
+	glVertex3f(largo, alto, ancho);
+	glVertex3f(largo, 0.0f, ancho);
+
+	glColor3f(0, 1, 0);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(largo, 0.0f, 0.0f);
+	glVertex3f(largo, 0.0f, ancho);	//cara derecha
+	glVertex3f(largo, alto, ancho);
+	glVertex3f(largo, alto, 0.0f);
+
+	glColor3f(1, 0.5, 0.5);
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(largo, 0.0f, 0.0f);	//cara trasera
+	glVertex3f(largo, alto, 0.0f);
+	glVertex3f(0.0f, alto, 0.0f);
+
+	glEnd();
+
+}
+
