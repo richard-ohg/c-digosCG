@@ -375,7 +375,7 @@ int main ( int argc, char** argv )   // Main Function
   screenH = glutGet(GLUT_SCREEN_HEIGHT);
   glutInitWindowSize  (500, 500);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
-  glutCreateWindow    ("Practica 5"); // Nombre de la Ventana
+  glutCreateWindow    ("Practica 7"); // Nombre de la Ventana
   printf("Resolution H: %i \n", screenW);
   printf("Resolution V: %i \n", screenH);
   InitGL ();						// Parametros iniciales de la aplicacion
