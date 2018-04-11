@@ -20,10 +20,59 @@ float giroHelices = 0.0f;
 float giroX = 0.0f;
 float giroY = 0.0f;
 float giroZ = 0.0f;
+float LuzX = 0.0f;
+float LuzY = 0.0f;
+float LuzZ = -4.0f;
+float LuzX2 = 0.0f;
+float LuzY2 = 0.0f;
+float LuzZ2 = -4.0f;
+float AnguloLuz = 80.0f;
+bool light = false;//Activar y desactivar luces 
+bool posicional = false;
 
+GLfloat Position[]= { 20.0f, 0.0f, 0.0f, 1.0f };			// Posicion de la luz el cuarto parámetro puede ser 1 o 0, si es 0 se considera luz direccional, si es 1 es luz puntual o spotlight
+GLfloat VistaLuz[]= { 0.0f, 0.0f, -1.0f, 1.0f };			// vector de direccion del cono
+GLfloat LightAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f }; 			// Ambient Light Values negro
+GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values blanco
+GLfloat LightSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
 
-GLfloat Position[]= { 0.0f, 3.0f, 0.0f, 1.0f };			// Light Position
-GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
+GLfloat mat_ambient[] = { 0.0, 0.0, 0.0, 1.0 };					// Color background
+GLfloat mat_diffuse_helices[] = { 0.0745, 0.3686, 0.6313, 1.0 };					// Object Color main 
+GLfloat mat_diffuse_mediaesferacentral[] = { 0.5333, 0.0509, 0.0509, 1.0 };
+GLfloat mat_diffuse_rojo[] = { 0.7, 0.0, 0.0, 1.0 };
+GLfloat mat_specular_azul[] = { 0.0, 0.0, 1.0, 1.0 };				// Specular color
+GLfloat mat_shininess[] = { 100.0 };							// 1 to greatest
+
+void luces(void)
+{
+	if (!light)
+	{
+		glDisable(GL_LIGHTING);
+		glDisable(GL_LIGHT1);
+		printf("apagada");
+	}
+	else
+	{
+		glEnable(GL_LIGHTING); //habilitamos las luces
+		glEnable(GL_LIGHT1); //de 0 a 7
+		printf("prendida");
+	}
+						 //Configuracion luz
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);				// Asignar componente ambiental de la luz
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);				// Asignar componente difusa de la luz
+	glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular);				// Asignar componente especular de la luz
+
+	glPushMatrix();
+	glTranslatef(LuzX, LuzY, LuzZ);
+	glLightfv(GL_LIGHT1, GL_POSITION, Position);				// Posicionar la fuente de luz
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, VistaLuz);			// vector de direccion de la fuente de luz si es que no es luz direccional
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, AnguloLuz);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, -0.5f);
+	glutWireSphere(0.07, 10.0f, 10.0f);
+	glPopMatrix();
+
+}
 
 void InitGL ( void )     // Inicializamos parametros
 {
@@ -48,6 +97,9 @@ void InitGL ( void )     // Inicializamos parametros
 //Función para dibujar una media esfera
 void dibujaDomoCielo(float radio, int paralelos, int meridianos, int modoRender)
 {
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular_azul);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	float ang1, ang2;
 	float a[3], b[3], c[3], d[3];
 	float delta1, delta2;
@@ -99,6 +151,9 @@ void dibujaDomoCielo(float radio, int paralelos, int meridianos, int modoRender)
 //Función para dibujar un cilindro
 void dibujaCilindro(float radio, int lados, float altura, int modoRender)
 {
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular_azul);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	float ang;
 	float a[3], b[3], c[3], d[3];
 	float delta;
@@ -164,12 +219,15 @@ void dibujaCilindro(float radio, int lados, float altura, int modoRender)
 
 		//*********
 	}
-	glColor3f(1.0,1.0,1.0);
+	glColor3f(1.0, 1.0, 1.0);
 }
 
 //Función para dibujar un cilindro de pura línea
 void dibujaCilindro2(float radio, int lados, float altura, int modoRender)
 {
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular_azul);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	float ang;
 	float a[3], b[3], c[3], d[3];
 	float delta;
@@ -236,78 +294,10 @@ void dibujaCilindro2(float radio, int lados, float altura, int modoRender)
 	glColor3f(1.0,1.0,1.0);
 }
 
-
-void prisma(void)
-{
-	GLfloat vertice [8][3] = {
-				{0.5 ,-0.5, 0.5},    //Coordenadas Vértice 0 V0
-				{-0.5 ,-0.5, 0.5},    //Coordenadas Vértice 1 V1
-				{-0.5 ,-0.5, -0.5},    //Coordenadas Vértice 2 V2
-				{0.5 ,-0.5, -0.5},    //Coordenadas Vértice 3 V3
-				{0.5 ,0.5, 0.5},    //Coordenadas Vértice 4 V4
-				{0.5 ,0.5, -0.5},    //Coordenadas Vértice 5 V5
-				{-0.5 ,0.5, -0.5},    //Coordenadas Vértice 6 V6
-				{-0.5 ,0.5, 0.5},    //Coordenadas Vértice 7 V7
-				};
-
-		glBegin(GL_POLYGON);	//Front
-			//glNormal3f( 0.0f, 0.0f, 1.0f);
-			glColor3f(1.0, 0.0, 0.0);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[4]);
-			glVertex3fv(vertice[7]);
-			glVertex3fv(vertice[1]);
-		glEnd();
-
-		glBegin(GL_POLYGON);	//Right
-		glColor3f(0.0, 0.0, 1.0);
-			//glNormal3f( 1.0f, 0.0f, 0.0f);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[3]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[4]);
-		glEnd();
-
-		glBegin(GL_POLYGON);	//Back
-		glColor3f(0.0, 1.0, 0.0);
-								//glNormal3f( 0.0f, 0.0f, -1.0f);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[3]);
-			glVertex3fv(vertice[2]);
-		glEnd();
-
-		glBegin(GL_POLYGON);  //Left
-		glColor3f(1.0, 1.0, 1.0);
-							  //glNormal3f( -1.0f, 0.0f, 0.0f);
-			glVertex3fv(vertice[1]);
-			glVertex3fv(vertice[7]);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[2]);
-		glEnd();
-
-		glBegin(GL_POLYGON);  //Bottom
-		glColor3f(0.4, 0.2, 0.6);
-							  //glNormal3f( 0.0f, -1.0f, 0.0f);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[1]);
-			glVertex3fv(vertice[2]);
-			glVertex3fv(vertice[3]);
-		glEnd();
-
-		glBegin(GL_POLYGON);  //Top
-		glColor3f(0.8, 0.2, 0.4);
-							  //glNormal3f( 0.0f, 1.0f, 0.0f);
-			glVertex3fv(vertice[4]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[7]);
-		glEnd();
-}
-
 void display ( void )   // Creamos la funcion donde se dibuja
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Limiamos pantalla y Depth Buffer
+	luces();
 	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -336,6 +326,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 							glRotatef(90, 1, 0, 0);
 							glRotatef(giroHelices,0,1,0);
 							glScalef(.1,6,.7);
+							glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_helices);
 							glColor3f(0.0745, 0.3686, 0.6313);
 							dibujaCilindro(5,20,0.1,1);
 						glPopMatrix();
@@ -346,6 +337,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 					glRotatef(90, 1, 0, 0);
 					glColor3f(0.7, 0.0, 0.0);
+					glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_rojo);
 					dibujaCilindro(0.5,20,2,1); //para las hélices
 
 				glPopMatrix(); //sale cilindro hélice 1
@@ -370,6 +362,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 							glRotatef(giroHelices,0,1,0);
 							glScalef(.1,6,.7);
 							glColor3f(0.0745, 0.3686, 0.6313);
+							glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_helices);
 							dibujaCilindro(5,20,0.1,1);
 						glPopMatrix();
 
@@ -379,6 +372,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					glPopMatrix();
 					glRotatef(90, 1, 0, 0);
 					glColor3f(0.7, 0.0, 0.0);
+					glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_rojo);
 					dibujaCilindro(0.5,20,2,1); //para las hélices
 
 				glPopMatrix(); //sale hélice 2
@@ -408,6 +402,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 							glRotatef(giroHelices,0,1,0);
 							glScalef(.1,6,.7);
 							glColor3f(0.0745, 0.3686, 0.6313);
+							glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_helices);
 							dibujaCilindro(5,20,0.1,1);
 						glPopMatrix();
 
@@ -417,6 +412,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					glPopMatrix();
 					glRotatef(90, 1, 0, 0);
 					glColor3f(0.7, 0.0, 0.0);
+					glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_rojo);
 					dibujaCilindro(0.5,20,2,1); //para las hélices
 
 				glPopMatrix(); //sale hélice 3
@@ -441,6 +437,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 							glRotatef(giroHelices,0,1,0);
 							glScalef(.1,6,.7);
 							glColor3f(0.0745, 0.3686, 0.6313);
+							glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_helices);
 							dibujaCilindro(5,20,0.1,1);
 						glPopMatrix();
 
@@ -449,6 +446,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					glPopMatrix();
 					glRotatef(90, 1, 0, 0);
 					glColor3f(0.7, 0.0, 0.0);
+					glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_rojo);
 					dibujaCilindro(0.5,20,2,1); //para las hélices
 
 				glPopMatrix(); //sale hélice 4
@@ -465,9 +463,11 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 		glTranslatef(0,12,0);
 		glColor3f(0.5333, 0.0509, 0.0509);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_mediaesferacentral);
 		dibujaDomoCielo(4,10,10,1);
 		glRotatef(180,1,0,0);
 		glColor3f(0.5333, 0.0509, 0.0509);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse_mediaesferacentral);
 		dibujaDomoCielo(4,10,10,1);
 
 	glPopMatrix();
@@ -520,22 +520,69 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'X':
 			giroHelices += 10.0f;
 			break;
-		case 'g':
-		case 'G':
+		case 'b':
+		case 'B':
 			giroX += 10.0f;
 			break;
-		case 'h':
-		case 'H':
+		case 'n':
+		case 'N':
 			giroY += 10.0f;
 			break;
-		case 'j':
-		case 'J':
+		case 'm':
+		case 'M':
 			giroZ += 10.0f;
 			break;
 		case 'c':
 		case 'C':
 			giroDron += 10.0f;
 			break;
+		case 'j':
+			LuzX += 0.5f;
+			break;
+		case 'J':
+			LuzX -= 0.5f;
+			break;
+		case 'k':
+			LuzY += 0.5f;
+			break;
+		case 'K':
+			LuzY -= 0.5f;
+			break;
+		case 'l':
+			LuzZ += 0.5f;
+			break;
+		case 'L':
+			LuzZ -= 0.5f;
+			break;
+		case 'u':
+			LuzX2 += 0.5f;
+			break;
+		case 'U':
+			LuzX2 -= 0.5f;
+			break;
+		case 'i':
+			LuzY2 += 0.5f;
+			break;
+		case 'I':
+			LuzY2 -= 0.5f;
+			break;
+		case 'o':
+			LuzZ2 += 0.5f;
+			break;
+		case 'O':
+			LuzZ2 -= 0.5f;
+			break;
+		case 'p':
+		case 'P':
+			light = !light;
+			break;
+
+		case 'q':
+			AnguloLuz += 1.0f;
+			break;
+		case 'Q':
+			AnguloLuz -= 1.0f;
+		break;
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
 		break;        
