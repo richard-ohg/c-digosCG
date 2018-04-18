@@ -6,7 +6,6 @@
 //*************											******//
 //************************************************************//
 #include "texture.h"
-//#include "Main.h"
 
 float pos_camX = 0, pos_camY = 0, pos_camZ = -5; 
 int eye_camX = 0, eye_camY = 0.0, eye_camZ = 0;
