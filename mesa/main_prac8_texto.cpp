@@ -25,7 +25,7 @@ CTexture t_naruto;
 CTexture t_pikachu;
 CTexture t_madera;
 
-int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
+void *font = GLUT_BITMAP_TIMES_ROMAN_24;
 
 
 
@@ -154,9 +154,9 @@ void prisma(GLuint textura1, GLuint textura6)
 		glBindTexture(GL_TEXTURE_2D, textura6);   // choose the texture to use.
 		glBegin(GL_POLYGON);  //Top
 			glNormal3f( 0.0f, 1.0f, 0.0f);
-			glTexCoord2f(8.0, 0.0f); glVertex3fv(vertice[4]);
-			glTexCoord2f(8.0, 8.0f); glVertex3fv(vertice[5]);
-			glTexCoord2f(0.0, 8.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(4.0, 0.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(4.0, 4.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0, 4.0f); glVertex3fv(vertice[6]);
 			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[7]);
 		glEnd();
 }
@@ -173,52 +173,61 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glRotatef(eye_camX, 1.0, 0.0, 0.0);
 		glRotatef(eye_camY, 0.0, 1.0, 0.0);
 		glRotatef(eye_camZ, 0.0, 0.0, 1.0);
-		//glRotatef(30.0, 1.0, 0.0, 0.0);
+		glRotatef(30.0, 1.0, 0.0, 0.0);
 	
-		glPushMatrix(); 
-			glPushMatrix();
+		glPushMatrix(); // stack de primer prisma medio - frente
+			glPushMatrix(); // stack de segundo prisma medio - medio
 			glTranslatef(0.0, 0.0, -2.5);
-				glPushMatrix();
+				glPushMatrix(); // stack de tercer prisma medio - atrás
 				glTranslatef(0.0, 0.0, -2.5);
-					glColor3f(1.0, 1.0, 1.0);
+					glPushMatrix(); //stack de cuarto prisma derecha - atrás
+					glTranslatef(1.25, -1.5, 0.0);
+						glPushMatrix(); //stack de quinto prisma derecha - medio
+						glTranslatef(0.0, 1.5, 2.5);
+							glPushMatrix(); //stack de sexto prisma derecha - frente
+							glTranslatef(0.0, -1.5, 2.5);
+								//glColor3f(1.0, 1.0, 1.0);
+								glScalef(0.5, 4.0, 1.0);
+								prisma(t_madera.GLindex, t_madera.GLindex);
+							glPopMatrix();
+							//glColor3f(1.0, 1.0, 1.0);
+							glScalef(0.5, 1.0, 4.0);
+							prisma(t_madera.GLindex, t_madera.GLindex);
+						glPopMatrix();
+						//glColor3f(1.0, 1.0, 1.0);
+						glScalef(0.5, 4.0, 1.0);
+						prisma(t_madera.GLindex, t_madera.GLindex);
+					glPopMatrix();
+					glPushMatrix(); //stack de séptimo prisma izquierda - atrás
+					glTranslatef(-1.25, -1.5, 0.0);
+						glPushMatrix(); //stack de octavo prisma izquierda - medio
+						glTranslatef(0.0, 1.5, 2.5);
+							glPushMatrix(); //stack de noveno prisma izquierda - medio
+							glTranslatef(0.0, -1.5, 2.5);
+								//glColor3f(1.0, 1.0, 1.0);
+								glScalef(0.5, 4.0, 1.0);
+								prisma(t_madera.GLindex, t_madera.GLindex);
+							glPopMatrix();
+							//glColor3f(1.0, 1.0, 1.0);
+							glScalef(0.5, 1.0, 4.0);
+							prisma(t_madera.GLindex, t_madera.GLindex);
+						glPopMatrix();
+						//glColor3f(1.0, 1.0, 1.0);
+						glScalef(0.5, 4.0,1.0);
+						prisma(t_madera.GLindex, t_madera.GLindex);
+					glPopMatrix();
+					//glColor3f(1.0, 1.0, 1.0);
 					glScalef(2.0, 1.0, 1.0);
 					prisma(t_madera.GLindex, t_madera.GLindex);
 				glPopMatrix();
-					glColor3f(1.0, 1.0, 1.0);
-					glScalef(2.0, 1.0, 4.0);
-					prisma(t_madera.GLindex, t_Ajedrez1.GLindex);
+				//glColor3f(1.0, 1.0, 1.0);
+				glScalef(2.0, 1.0, 4.0);
+				prisma(t_madera.GLindex, t_Ajedrez1.GLindex);
 			glPopMatrix();
-			glColor3f(1.0, 1.0, 1.0);
+			//glColor3f(1.0, 1.0, 1.0);
 			glScalef(2.0,1.0,1.0);  
 			prisma(t_madera.GLindex, t_madera.GLindex);	
 		glPopMatrix();
-
-		glPushMatrix();
-			glPushMatrix();
-			glTranslatef(1.5, 0.0, 0.0);
-				glPushMatrix();
-				glTranslatef(0.0, 0.0, -2.5);
-					glColor3f(1.0, 1.0, 1.0);
-					glScalef(1.0, 4.0, 1.0);
-					prisma(t_madera.GLindex, t_madera.GLindex);
-				glPopMatrix();
-				glColor3f(1.0, 1.0, 1.0);
-				glScalef(1.0, 4.0, 4.0);
-				prisma(t_madera.GLindex, t_madera.GLindex);
-			glPopMatrix();
-			glColor3f(1.0, 1.0, 1.0);
-			glScalef(1.0, 4.0, 1.0);
-			prisma(t_madera.GLindex, t_madera.GLindex);
-		glPopMatrix();
-
-		/*glPushMatrix();
-		glTranslatef(2.0, 1.0, 1.0);
-		glColor3f(1.0, 1.0, 1.0);
-		glScalef(2.0, 1.0, 1.0);
-		prisma(t_goku.GLindex, t_metal01.GLindex);
-		glPopMatrix();*/
-
-
 
 
 	glPopMatrix();
