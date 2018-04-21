@@ -47,8 +47,11 @@ CFiguras obj; // objeto para figuras
 CTexture esfera;
 CTexture esfera2;
 CTexture esfera3;
+CTexture esfera4;
 CTexture madera;
 CTexture cono;
+CTexture t_Ajedrez1;
+CTexture t_madera;
 
 CFiguras cubo;
 CFiguras sky;
@@ -65,6 +68,79 @@ CFiguras fig4;	//Pasto01
 CFiguras fig5;	//Casa01
 CFiguras fig6;
 CFiguras fig7;	//Para crear Monito
+
+//void prisma (GLuint textura1, GLuint textura2, GLuint textura3, GLuint textura4, GLuint textura5, GLuint textura6)  //Funcion creacion prisma
+void prisma(GLuint textura1, GLuint textura6)
+{
+
+	GLfloat vertice [8][3] = {
+				{0.5 ,-0.5, 0.5},    //Coordenadas Vértice 0 V0
+				{-0.5 ,-0.5, 0.5},    //Coordenadas Vértice 1 V1
+				{-0.5 ,-0.5, -0.5},    //Coordenadas Vértice 2 V2
+				{0.5 ,-0.5, -0.5},    //Coordenadas Vértice 3 V3
+				{0.5 ,0.5, 0.5},    //Coordenadas Vértice 4 V4
+				{0.5 ,0.5, -0.5},    //Coordenadas Vértice 5 V5
+				{-0.5 ,0.5, -0.5},    //Coordenadas Vértice 6 V6
+				{-0.5 ,0.5, 0.5},    //Coordenadas Vértice 7 V7
+				};
+
+		
+		glBindTexture(GL_TEXTURE_2D, textura1);   // choose the texture to use.
+		glBegin(GL_POLYGON);	//Front
+			glColor3f(1.0,1.0,1.0);
+			glNormal3f( 0.0f, 0.0f, 1.0f);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[1]);
+		glEnd();
+	
+		//glBindTexture(GL_TEXTURE_2D, textura2);
+		glBegin(GL_POLYGON);	//Right
+			glNormal3f( 1.0f, 0.0f, 0.0f);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[3]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[4]);
+		glEnd();
+
+		//glBindTexture(GL_TEXTURE_2D, textura3);
+		glBegin(GL_POLYGON);	//Back
+			glNormal3f( 0.0f, 0.0f,-1.0f);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[3]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[2]);
+		glEnd();
+
+		//glBindTexture(GL_TEXTURE_2D, textura4);
+		glBegin(GL_POLYGON);  //Left
+			glNormal3f(-1.0f, 0.0f, 0.0f);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[1]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[2]);
+		glEnd();
+
+		//glBindTexture(GL_TEXTURE_2D, textura5);
+		glBegin(GL_POLYGON);  //Bottom
+			glNormal3f( 0.0f,-1.0f, 0.0f);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[1]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[2]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[3]);
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, textura6);   // choose the texture to use.
+		glBegin(GL_POLYGON);  //Top
+			glNormal3f( 0.0f, 1.0f, 0.0f);
+			glTexCoord2f(4.0, 0.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(4.0, 4.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0, 4.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[7]);
+		glEnd();
+}
+
 
 void ciudad ()
 {
@@ -279,9 +355,22 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	esfera3.BuildGLTexture();
 	esfera3.ReleaseImage();
 
+	esfera4.LoadTGA("esfera4.tga");
+	esfera4.BuildGLTexture();
+	esfera4.ReleaseImage();
+
 	cono.LoadTGA("textarbol.tga");
 	cono.BuildGLTexture();
 	cono.ReleaseImage();
+
+	// Para mesa
+	t_Ajedrez1.LoadTGA("01.tga");
+	t_Ajedrez1.BuildGLTexture();
+	t_Ajedrez1.ReleaseImage();
+
+	t_madera.LoadTGA("madera.tga");
+	t_madera.BuildGLTexture();
+	t_madera.ReleaseImage();
 
 	//END NEW//////////////////////////////
 
@@ -340,12 +429,13 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				fig3.prisma_anun(text3.GLindex, 0);
 				glEnable(GL_LIGHTING);
 			glPopMatrix();
-
+			/*
 			glEnable ( GL_COLOR_MATERIAL );
-			/*glPushMatrix();
+			glPushMatrix();
 				glTranslatef(-30, 0, 10);
 				arbol();
-			glPopMatrix();*/
+			glPopMatrix();
+			*/
 
 			glPushMatrix();
 				glTranslatef(17, 0, -10);
@@ -353,8 +443,10 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				fig1.esfera(4, 20, 20, text2.GLindex);
 			glPopMatrix();
 
+/*-------------------------------------------------------- Arbol -----------------------------------------------------*/
+
 			glPushMatrix(); // stack del tronco
-			glTranslatef(8, -1, -10);
+			glTranslatef(9, -1, -8);
 				glPushMatrix(); // stack del cono
 				glTranslatef(0, 3, 0);
 					glPushMatrix(); // stack primera esfera
@@ -378,10 +470,75 @@ void display ( void )   // Creamos la funcion donde se dibuja
 						obj.esfera(0.5, 20, 20, esfera3.GLindex); //radio, meridiados, paralelos, textura
 						glDisable(GL_ALPHA_TEST);
 					glPopMatrix();
+					glPushMatrix(); // stack cuarta esfera
+						glTranslatef(1.5, 2, 1.8);
+						glEnable(GL_ALPHA_TEST);
+						glAlphaFunc(GL_GREATER, 0.1);
+						obj.esfera(0.5, 20, 20, esfera4.GLindex); //radio, meridiados, paralelos, textura
+						glDisable(GL_ALPHA_TEST);
+					glPopMatrix();
 				obj.cono(5, 3, 20, cono.GLindex); // altura, radio, resolucion, textura
 				glPopMatrix();
 			obj.cilindro(1,3, 20, madera.GLindex); //radio, altura, resolucion, textura
 			glPopMatrix();
+
+/*------------------------------------------------------- Mesa -----------------------------------------------------------*/
+/*
+			glPushMatrix(); // stack de primer prisma medio - frente
+			glTranslatef(5.0, 2.0, -5.0);
+				glPushMatrix(); // stack de segundo prisma medio - medio
+				glTranslatef(0.0, 0.0, -1.25);
+					glPushMatrix(); // stack de tercer prisma medio - atrás
+					glTranslatef(0.0, 0.0, -1.25);
+						glPushMatrix(); //stack de cuarto prisma derecha - atrás
+						glTranslatef(0.625, -0.75, 0.0);
+							glPushMatrix(); //stack de quinto prisma derecha - medio
+							glTranslatef(0.0, 0.75, 1.25);
+								glPushMatrix(); //stack de sexto prisma derecha - frente
+								glTranslatef(0.0, -0.75, 1.25);
+									//glColor3f(1.0, 1.0, 1.0);
+									glScalef(0.25, 2.0, 0.5);
+									prisma(t_madera.GLindex, t_madera.GLindex);
+								glPopMatrix();
+								//glColor3f(1.0, 1.0, 1.0);
+								glScalef(0.25, 0.5, 2.0);
+								prisma(t_madera.GLindex, t_madera.GLindex);
+							glPopMatrix();
+							//glColor3f(1.0, 1.0, 1.0);
+							glScalef(0.25, 2.0, 0.5);
+							prisma(t_madera.GLindex, t_madera.GLindex);
+						glPopMatrix();
+						glPushMatrix(); //stack de séptimo prisma izquierda - atrás
+						glTranslatef(-0.625, -0.75, 0.0);
+							glPushMatrix(); //stack de octavo prisma izquierda - medio
+							glTranslatef(0.0, 0.75, 1.25);
+								glPushMatrix(); //stack de noveno prisma izquierda - medio
+								glTranslatef(0.0, -0.75, 1.25);
+									//glColor3f(1.0, 1.0, 1.0);
+									glScalef(0.25, 2.0, 0.5);
+									prisma(t_madera.GLindex, t_madera.GLindex);
+								glPopMatrix();
+								//glColor3f(1.0, 1.0, 1.0);
+								glScalef(0.25, 0.5, 2.0);
+								prisma(t_madera.GLindex, t_madera.GLindex);
+							glPopMatrix();
+							//glColor3f(1.0, 1.0, 1.0);
+							glScalef(0.25, 2.0, 0.5);
+							prisma(t_madera.GLindex, t_madera.GLindex);
+						glPopMatrix();
+						//glColor3f(1.0, 1.0, 1.0);
+						glScalef(1.0, 0.5, 0.5);
+						prisma(t_madera.GLindex, t_madera.GLindex);
+					glPopMatrix();
+					//glColor3f(1.0, 1.0, 1.0);
+					glScalef(1.0, 0.5, 2.0);
+					prisma(t_madera.GLindex, t_Ajedrez1.GLindex);
+				glPopMatrix();
+				//glColor3f(1.0, 1.0, 1.0);
+				glScalef(1.0, 0.5, 0.5);  
+				prisma(t_madera.GLindex, t_madera.GLindex);	
+			glPopMatrix();
+*/			
 
 			glColor3f(1.0,1.0,1.0);
 
@@ -499,7 +656,7 @@ int main ( int argc, char** argv )   // Main Function
 
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
-  glutInitWindowSize  (500, 500);	// Tamaño de la Ventana
+  glutInitWindowSize  (1366, 768);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
   glutCreateWindow    ("Final"); // Nombre de la Ventana
   //glutFullScreen     ( );         // Full Screen
