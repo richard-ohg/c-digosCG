@@ -42,14 +42,16 @@ CTexture text6;	//Casa01
 CTexture tree;
 CTexture edificio;
 
-CTexture img; // objeto para textura
-CFiguras obj; // objeto para figuras
+CTexture img; // objeto para textura de prueba
+CFiguras obj; // objeto para figuras creado en clase
+// Texturas para arbol
 CTexture esfera;
 CTexture esfera2;
 CTexture esfera3;
 CTexture esfera4;
-CTexture madera;
 CTexture cono;
+CTexture madera;
+// Texturas para mesa
 CTexture t_Ajedrez1;
 CTexture t_madera;
 
@@ -69,6 +71,7 @@ CFiguras fig5;	//Casa01
 CFiguras fig6;
 CFiguras fig7;	//Para crear Monito
 
+// Funcion prisma para la mesa que recibe dos texturas como parámetro,
 //void prisma (GLuint textura1, GLuint textura2, GLuint textura3, GLuint textura4, GLuint textura5, GLuint textura6)  //Funcion creacion prisma
 void prisma(GLuint textura1, GLuint textura6)
 {
@@ -483,7 +486,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPopMatrix();
 
 /*------------------------------------------------------- Mesa -----------------------------------------------------------*/
-/*
+
 			glPushMatrix(); // stack de primer prisma medio - frente
 			glTranslatef(5.0, 2.0, -5.0);
 				glPushMatrix(); // stack de segundo prisma medio - medio
@@ -538,7 +541,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glScalef(1.0, 0.5, 0.5);  
 				prisma(t_madera.GLindex, t_madera.GLindex);	
 			glPopMatrix();
-*/			
+
 
 			glColor3f(1.0,1.0,1.0);
 
@@ -656,7 +659,7 @@ int main ( int argc, char** argv )   // Main Function
 
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
-  glutInitWindowSize  (1366, 768);	// Tamaño de la Ventana
+  glutInitWindowSize  (500, 500); //1366,768	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
   glutCreateWindow    ("Final"); // Nombre de la Ventana
   //glutFullScreen     ( );         // Full Screen
