@@ -11,7 +11,7 @@
 #include "figuras.h"
 #include "Camera.h"
 
-//#include "cmodel/CModel.h"
+#include "cmodel/CModel.h"
 
 //NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
 static GLuint ciudad_display_list;	//Display List for the Monito
@@ -19,7 +19,7 @@ static GLuint ciudad_display_list;	//Display List for the Monito
 
 //NEW// Keyframes
 //Variables de dibujo y manipulacion
-float posX =0, posY = 2.5, posZ =-3.5, rotRodIzq = 0;
+float posX =0, posY = 2.5, posZ =-3.5, rotRodIzq = 0, rotBrIzq = 0, rotRodDer = 0, rotBrDer = 0;
 float giroMonito = 0;
 
 #define MAX_FRAMES 5
@@ -32,11 +32,18 @@ typedef struct _frame
 	float posX;		//Variable para PosicionX
 	float posY;		//Variable para PosicionY
 	float posZ;		//Variable para PosicionZ
+
 	float incX;		//Variable para IncrementoX
 	float incY;		//Variable para IncrementoY
 	float incZ;		//Variable para IncrementoZ
 	float rotRodIzq;
+	float rotBrIzq;
+	float rotRodDer;
+	float rotBrDer;
 	float rotInc;
+	float rotInc2;
+	float rotInc3;
+	float rotInc4;
 	float giroMonito;
 	float giroMonitoInc;
 	
@@ -51,14 +58,14 @@ int playIndex=0;
 //NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
 
 int w = 500, h = 500;
-int frame=0,timebase=0;
+int frame=0,time,timebase=0;
 char s[30];
 
 CCamera objCamera;	//Create objet Camera
 
 GLfloat g_lookupdown = 0.0f;    // Look Position In The Z-Axis (NEW) 
 
-void* font=GLUT_BITMAP_HELVETICA_18;
+int font=(int)GLUT_BITMAP_HELVETICA_18;
 
 
 //GLfloat Diffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values
@@ -166,7 +173,10 @@ void saveFrame ( void )
 	KeyFrame[FrameIndex].posY=posY;
 	KeyFrame[FrameIndex].posZ=posZ;
 
-	KeyFrame[FrameIndex].rotRodIzq=rotRodIzq;
+	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+	KeyFrame[FrameIndex].rotBrIzq = rotBrIzq;
+	KeyFrame[FrameIndex].rotRodDer = rotRodDer;
+	KeyFrame[FrameIndex].rotBrDer = rotBrDer;
 	KeyFrame[FrameIndex].giroMonito=giroMonito;
 			
 	FrameIndex++;
@@ -179,6 +189,9 @@ void resetElements( void )
 	posZ=KeyFrame[0].posZ;
 
 	rotRodIzq=KeyFrame[0].rotRodIzq;
+	rotBrIzq = KeyFrame[0].rotBrIzq;
+	rotRodDer = KeyFrame[0].rotRodDer;
+	rotBrDer = KeyFrame[0].rotBrDer;
 	giroMonito=KeyFrame[0].giroMonito;
 
 }
@@ -190,6 +203,9 @@ void interpolation ( void )
 	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;	
 
 	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;	
+	KeyFrame[playIndex].rotInc2 = (KeyFrame[playIndex + 1].rotBrIzq - KeyFrame[playIndex].rotBrIzq) / i_max_steps;
+	KeyFrame[playIndex].rotInc3 = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+	KeyFrame[playIndex].rotInc4 = (KeyFrame[playIndex + 1].rotBrDer - KeyFrame[playIndex].rotBrDer) / i_max_steps;
 	KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;
 
 }
@@ -273,7 +289,7 @@ void monito()
 			fig7.esfera(0.5, 12, 12, 0);
 			glPushMatrix();
 				glTranslatef(0.25, 0, 0);
-				glRotatef(-45, 0, 1, 0); 
+				glRotatef(-45+rotBrDer, 0, 1, 0); 
 				glTranslatef(0.75, 0, 0);
 				fig7.prisma(0.7, 1.5, 0.7, 0);
 			glPopMatrix();
@@ -285,7 +301,7 @@ void monito()
 			glPushMatrix();
 				glTranslatef(-0.25, 0, 0);
 				glRotatef(45, 0, 1, 0); 
-				glRotatef(25, 0, 0, 1);
+				glRotatef(25+rotBrIzq, 0, 0, 1);
 				glRotatef(25, 1, 0, 0); 
 				glTranslatef(-0.75, 0, 0);
 				fig7.prisma(0.7, 1.5, 0.7, 0);
@@ -305,7 +321,7 @@ void monito()
 
 				glPushMatrix();
 					glTranslatef(0, -0.5, 0);
-					glRotatef(15, 1, 0, 0);
+					glRotatef(15+rotRodDer, 1, 0, 0);
 					glTranslatef(0, -0.75, 0);
 					fig7.prisma(1.5, 0.5, 1, 0);
 
@@ -1249,6 +1265,12 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 		KeyFrame[i].incZ =0;
 		KeyFrame[i].rotRodIzq =0;
 		KeyFrame[i].rotInc =0;
+		KeyFrame[i].rotBrIzq = 0;
+		KeyFrame[i].rotInc2 = 0;
+		KeyFrame[i].rotRodDer = 0;
+		KeyFrame[i].rotInc3 = 0;
+		KeyFrame[i].rotBrDer = 0;
+		KeyFrame[i].rotInc4 = 0;
 		KeyFrame[i].giroMonito =0;
 		KeyFrame[i].giroMonitoInc =0;
 	}
@@ -1438,6 +1460,9 @@ void animacion()
 			posZ+=KeyFrame[playIndex].incZ;
 
 			rotRodIzq+=KeyFrame[playIndex].rotInc;
+			rotBrIzq += KeyFrame[playIndex].rotInc2;
+			rotRodDer += KeyFrame[playIndex].rotInc3;
+			rotBrDer += KeyFrame[playIndex].rotInc4;
 			giroMonito+=KeyFrame[playIndex].giroMonitoInc;
 
 			i_curr_steps++;
@@ -1552,6 +1577,36 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'B':						
 			rotRodIzq--;
 			printf("%f \n", rotRodIzq);
+			break;
+
+		case 't':
+			rotBrIzq++;
+			printf("%f \n", rotBrIzq);
+			break;
+
+		case 'T':
+			rotBrIzq--;
+			printf("%f \n", rotBrIzq);
+			break;
+
+		case 'm':
+			rotRodDer++;
+			printf("%f \n", rotRodDer);
+			break;
+
+		case 'M':
+			rotRodDer--;
+			printf("%f \n", rotRodDer);
+			break;
+
+		case 'n':
+			rotBrDer++;
+			printf("%f \n", rotBrDer);
+			break;
+
+		case 'N':
+			rotBrDer--;
+			printf("%f \n", rotBrDer);
 			break;
 
 		case 'p':						
