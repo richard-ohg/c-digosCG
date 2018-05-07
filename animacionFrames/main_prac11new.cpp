@@ -11,7 +11,7 @@
 #include "figuras.h"
 #include "Camera.h"
 
-#include "cmodel/CModel.h"
+//#include "cmodel/CModel.h"
 
 //NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
 static GLuint ciudad_display_list;	//Display List for the Monito
@@ -58,14 +58,14 @@ int playIndex=0;
 //NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
 
 int w = 500, h = 500;
-int frame=0,time,timebase=0;
+int frame=0,timebase=0;
 char s[30];
 
 CCamera objCamera;	//Create objet Camera
 
 GLfloat g_lookupdown = 0.0f;    // Look Position In The Z-Axis (NEW) 
 
-int font=(int)GLUT_BITMAP_HELVETICA_18;
+void* font=GLUT_BITMAP_HELVETICA_18;
 
 
 //GLfloat Diffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values
