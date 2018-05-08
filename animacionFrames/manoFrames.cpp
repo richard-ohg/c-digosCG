@@ -2,21 +2,92 @@
 //************************************************************//
 //************************************************************//
 //************** Alumno (s): *********************************//
-//*************	Hern·ndez Gonz·lez Ricardo Omar     	******//
+//*************	Hern√°ndez Gonz√°lez Ricardo Omar     	******//
 //*************											******//
 //************************************************************//
 #include "Main.h"
 
-float transZ = -5.0f;
+#define MAX_FRAMES 5
+int i_max_steps = 90;
+int i_curr_steps = 0;
+
+typedef struct _frame
+{
+	//Variables para GUARDAR Key Frames
+
+	float transZ;
+	float transX;
+	float giroX;
+	float giroY;
+	float giroZ;
+
+	float giroNudillo1;
+	float giroNudillo1Z;
+	float giroArt11;
+	float giroArt21;
+	float giroNudillo2;
+	float giroNudillo2Z;
+	float giroArt12;
+	float giroArt22;
+	float giroNudillo3;
+	float giroArt13;
+	float giroArt23;
+	float giroNudillo4;
+	float giroArt14;
+	float giroArt24;
+	float giroNudillo5;
+	float giroArt15;
+
+	float IncZ;
+	float IncX;
+	float IncRotX;
+	float IncRotY;
+	float IncRotZ;
+
+	float rotInc;
+	float rotInc2;
+	float rotInc3;
+	float rotInc4;
+	float rotInc5;
+	float rotInc6;
+	float rotInc7;
+	float rotInc8;
+	float rotInc9;
+	float rotInc10;
+	float rotInc11;
+	float rotInc12;
+	float rotInc13;
+	float rotInc14;
+	float rotInc15;
+	float rotInc16;
+	
+}FRAME;
+
+FRAME KeyFrame[MAX_FRAMES];
+int FrameIndex = 0;			//introducir datos
+bool play = false;
+int playIndex = 0;
+
+
+//NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
+
+int w = 500, h = 500;
+int frame=0,timebase=0;
+char s[30];
+
+
+float transZ = -11.0f;
 float transX = 0.0f;
 float AnguloX = 0.0f;
 float AnguloY = 0.0f;
 int screenW = 0.0;
 int screenH = 0.0;
 float giroNudillo1 = 0.0f;
+float giroNudillo1Z = 0.0f;
 float giroArt11 = 0.0f;
 float giroArt21 = 0.0f;
 float giroNudillo2 = 0.0f;
+float giroNudillo2Z = 0.0f;
 float giroArt12 = 0.0f;
 float giroArt22 = 0.0f;
 float giroNudillo3 = 0.0f;
@@ -27,10 +98,97 @@ float giroArt14 = 0.0f;
 float giroArt24 = 0.0f;
 float giroNudillo5 = 0.0f;
 float giroArt15 = 0.0f;
-float giro = 0.0f;
+float giroX = 0.0f;
+float giroY = 0.0f;
+float giroZ = 0.0f;
 
 GLfloat Position[]= { 0.0f, 3.0f, 0.0f, 1.0f };			// Light Position
 GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
+
+void saveFrame ( void )
+{
+	
+	printf("frameindex %d\n",FrameIndex);			
+
+	KeyFrame[FrameIndex].transZ = transZ;
+	KeyFrame[FrameIndex].transX = transX;
+	KeyFrame[FrameIndex].giroX = giroX;
+	KeyFrame[FrameIndex].giroY = giroY;
+	KeyFrame[FrameIndex].giroZ = giroZ;
+
+	KeyFrame[FrameIndex].giroNudillo1 = giroNudillo1;
+	KeyFrame[FrameIndex].giroNudillo1Z = giroNudillo1Z;
+	KeyFrame[FrameIndex].giroArt11 = giroArt11;
+	KeyFrame[FrameIndex].giroArt21 = giroArt21;
+	KeyFrame[FrameIndex].giroNudillo2 = giroNudillo2;
+	KeyFrame[FrameIndex].giroNudillo2Z = giroNudillo2Z;
+	KeyFrame[FrameIndex].giroArt12 = giroArt12;
+	KeyFrame[FrameIndex].giroArt22 = giroArt22;
+	KeyFrame[FrameIndex].giroNudillo3 = giroNudillo3;
+	KeyFrame[FrameIndex].giroArt13 = giroArt13;
+	KeyFrame[FrameIndex].giroArt23 = giroArt23;
+	KeyFrame[FrameIndex].giroNudillo4 = giroNudillo4;
+	KeyFrame[FrameIndex].giroArt14 = giroArt14;
+	KeyFrame[FrameIndex].giroArt24 = giroArt24;
+	KeyFrame[FrameIndex].giroNudillo5 = giroNudillo5;
+	KeyFrame[FrameIndex].giroArt15 = giroArt15;
+			
+	FrameIndex++;
+}
+
+void resetElements( void )
+{
+	transZ = KeyFrame[0].transZ;
+	transX = KeyFrame[0].transX;
+	giroX = KeyFrame[0].giroX;
+	giroY = KeyFrame[0].giroY;
+	giroZ = KeyFrame[0].giroZ;
+
+	giroNudillo1 = KeyFrame[0].giroNudillo1;
+	giroNudillo1Z = KeyFrame[0].giroNudillo1Z;
+	giroArt11 = KeyFrame[0].giroArt11;
+	giroArt21 = KeyFrame[0].giroArt21;
+	giroNudillo2 = KeyFrame[0].giroNudillo2;
+	giroNudillo2Z = KeyFrame[0].giroNudillo2Z;
+	giroArt12 = KeyFrame[0].giroArt12;
+	giroArt22 = KeyFrame[0].giroArt22;
+	giroNudillo3 = KeyFrame[0].giroNudillo3;
+	giroArt13 = KeyFrame[0].giroArt13;
+	giroArt23 = KeyFrame[0].giroArt23;
+	giroNudillo4 = KeyFrame[0].giroNudillo4;
+	giroArt14 = KeyFrame[0].giroArt14;
+	giroArt24 = KeyFrame[0].giroArt24;
+	giroNudillo5 = KeyFrame[0].giroNudillo5;
+	giroArt15 = KeyFrame[0].giroArt15;
+
+}
+
+void interpolation ( void )
+{
+	KeyFrame[playIndex].IncZ = (KeyFrame[playIndex + 1].transZ - KeyFrame[playIndex].transZ) / i_max_steps;
+	KeyFrame[playIndex].IncX = (KeyFrame[playIndex + 1].transX - KeyFrame[playIndex].transX) / i_max_steps;	
+	KeyFrame[playIndex].IncRotX = (KeyFrame[playIndex + 1].giroX - KeyFrame[playIndex].giroX) / i_max_steps;
+	KeyFrame[playIndex].IncRotY = (KeyFrame[playIndex + 1].giroY - KeyFrame[playIndex].giroY) / i_max_steps;
+	KeyFrame[playIndex].IncRotZ = (KeyFrame[playIndex + 1].giroZ - KeyFrame[playIndex].giroZ) / i_max_steps;	
+
+	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].giroNudillo1 - KeyFrame[playIndex].giroNudillo1) / i_max_steps;	
+	KeyFrame[playIndex].rotInc2 = (KeyFrame[playIndex + 1].giroArt11 - KeyFrame[playIndex].giroArt11) / i_max_steps;
+	KeyFrame[playIndex].rotInc3 = (KeyFrame[playIndex + 1].giroArt21 - KeyFrame[playIndex].giroArt21) / i_max_steps;
+	KeyFrame[playIndex].rotInc4 = (KeyFrame[playIndex + 1].giroNudillo2 - KeyFrame[playIndex].giroNudillo2) / i_max_steps;
+	KeyFrame[playIndex].rotInc5 = (KeyFrame[playIndex + 1].giroArt12 - KeyFrame[playIndex].giroArt12) / i_max_steps;
+	KeyFrame[playIndex].rotInc6 = (KeyFrame[playIndex + 1].giroArt22 - KeyFrame[playIndex].giroArt22) / i_max_steps;
+	KeyFrame[playIndex].rotInc7 = (KeyFrame[playIndex + 1].giroNudillo3 - KeyFrame[playIndex].giroNudillo3) / i_max_steps;	
+	KeyFrame[playIndex].rotInc8 = (KeyFrame[playIndex + 1].giroArt13 - KeyFrame[playIndex].giroArt13) / i_max_steps;
+	KeyFrame[playIndex].rotInc9 = (KeyFrame[playIndex + 1].giroArt23 - KeyFrame[playIndex].giroArt23) / i_max_steps;
+	KeyFrame[playIndex].rotInc10 = (KeyFrame[playIndex + 1].giroNudillo4 - KeyFrame[playIndex].giroNudillo4) / i_max_steps;
+	KeyFrame[playIndex].rotInc11 = (KeyFrame[playIndex + 1].giroArt14 - KeyFrame[playIndex].giroArt14) / i_max_steps;
+	KeyFrame[playIndex].rotInc12 = (KeyFrame[playIndex + 1].giroArt24 - KeyFrame[playIndex].giroArt24) / i_max_steps;
+	KeyFrame[playIndex].rotInc13 = (KeyFrame[playIndex + 1].giroNudillo5 - KeyFrame[playIndex].giroNudillo5) / i_max_steps;
+	KeyFrame[playIndex].rotInc14 = (KeyFrame[playIndex + 1].giroArt15 - KeyFrame[playIndex].giroArt15) / i_max_steps;
+	KeyFrame[playIndex].rotInc15 = (KeyFrame[playIndex + 1].giroNudillo1Z - KeyFrame[playIndex].giroNudillo1Z) / i_max_steps;
+	KeyFrame[playIndex].rotInc16 = (KeyFrame[playIndex + 1].giroNudillo2Z - KeyFrame[playIndex].giroNudillo2Z) / i_max_steps;
+
+}
 
 void InitGL ( void )     // Inicializamos parametros
 {
@@ -50,19 +208,69 @@ void InitGL ( void )     // Inicializamos parametros
 	glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a realizar
 	glEnable ( GL_COLOR_MATERIAL );
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	for(int i=0; i<MAX_FRAMES; i++)
+	{
+		KeyFrame[i].transZ = 0;
+		KeyFrame[i].transX = 0;
+		KeyFrame[i].giroX = 0;
+		KeyFrame[i].giroY = 0;
+		KeyFrame[i].giroZ = 0;
+		KeyFrame[i].IncZ = 0;
+		KeyFrame[i].IncX = 0;
+		KeyFrame[i].IncRotX = 0;
+		KeyFrame[i].IncRotY = 0;
+		KeyFrame[i].IncRotZ = 0;
+
+		KeyFrame[i].giroNudillo1 = 0;
+		KeyFrame[i].giroNudillo1Z = 0;
+		KeyFrame[i].giroArt11 = 0;
+		KeyFrame[i].giroArt21 = 0;
+		KeyFrame[i].giroNudillo2 = 0;
+		KeyFrame[i].giroNudillo2Z = 0;
+		KeyFrame[i].giroArt12 = 0;
+		KeyFrame[i].giroArt22 = 0;
+		KeyFrame[i].giroNudillo3 = 0;
+		KeyFrame[i].giroArt13 = 0;
+		KeyFrame[i].giroArt23 = 0;
+		KeyFrame[i].giroNudillo4 = 0;
+		KeyFrame[i].giroArt14 = 0;
+		KeyFrame[i].giroArt24 = 0;
+		KeyFrame[i].giroNudillo5 = 0;
+		KeyFrame[i].giroArt15 = 0;
+
+		KeyFrame[i].rotInc = 0;
+		KeyFrame[i].rotInc2 = 0;
+		KeyFrame[i].rotInc3 = 0;
+		KeyFrame[i].rotInc4 = 0;
+		KeyFrame[i].rotInc5 = 0;
+		KeyFrame[i].rotInc6 = 0;
+		KeyFrame[i].rotInc7 = 0;
+		KeyFrame[i].rotInc8 = 0;
+		KeyFrame[i].rotInc9 = 0;
+		KeyFrame[i].rotInc10 = 0;
+		KeyFrame[i].rotInc11 = 0;
+		KeyFrame[i].rotInc12 = 0;
+		KeyFrame[i].rotInc13 = 0;
+		KeyFrame[i].rotInc14 = 0;
+		KeyFrame[i].rotInc15 = 0;
+		KeyFrame[i].rotInc16 = 0;
+	}
+
+	
 }
 
 void prisma(void)
 {
 	GLfloat vertice [8][3] = {
-				{0.5 ,-0.5, 0.5},    //Coordenadas VÈrtice 0 V0
-				{-0.5 ,-0.5, 0.5},    //Coordenadas VÈrtice 1 V1
-				{-0.5 ,-0.5, -0.5},    //Coordenadas VÈrtice 2 V2
-				{0.5 ,-0.5, -0.5},    //Coordenadas VÈrtice 3 V3
-				{0.5 ,0.5, 0.5},    //Coordenadas VÈrtice 4 V4
-				{0.5 ,0.5, -0.5},    //Coordenadas VÈrtice 5 V5
-				{-0.5 ,0.5, -0.5},    //Coordenadas VÈrtice 6 V6
-				{-0.5 ,0.5, 0.5},    //Coordenadas VÈrtice 7 V7
+				{0.5 ,-0.5, 0.5},    //Coordenadas V√©rtice 0 V0
+				{-0.5 ,-0.5, 0.5},    //Coordenadas V√©rtice 1 V1
+				{-0.5 ,-0.5, -0.5},    //Coordenadas V√©rtice 2 V2
+				{0.5 ,-0.5, -0.5},    //Coordenadas V√©rtice 3 V3
+				{0.5 ,0.5, 0.5},    //Coordenadas V√©rtice 4 V4
+				{0.5 ,0.5, -0.5},    //Coordenadas V√©rtice 5 V5
+				{-0.5 ,0.5, -0.5},    //Coordenadas V√©rtice 6 V6
+				{-0.5 ,0.5, 0.5},    //Coordenadas V√©rtice 7 V7
 				};
 
 		glBegin(GL_POLYGON);	//Front
@@ -129,26 +337,29 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	// ------------------- Comienza dibujo ---------------------
 	// Palma
 	glPushMatrix(); // stack palma
-	glTranslatef(-2.0f, 0.0f, transZ); // TraslaciÛn para la palma
-	glRotatef(giro, 1, 0, 0); //giro en mano completa
-	
+	glTranslatef(1 + transX, 0.0f, transZ); // Traslaci√≥n para la palma
+	glRotatef(giroX, 1, 0, 0); //giro en mano completa
+	glRotatef(giroY, 0, 1, 0); //giro en mano completa
+	glRotatef(giroZ, 0, 0, 1); //giro en mano completa
+
 	glPushMatrix();// Nudillo 1
 		glTranslatef(1.5f, 1.5f, 0.0f);
-		glRotatef(giroNudillo1, 0, 0, 1);
+		glRotatef(giroNudillo1, 0, 1, 0);
+		glRotatef(giroNudillo1Z, 0, 0, 1);
 
 		glPushMatrix(); //Falange 1
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 1
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt11, 0, 0, 1);
+				glRotatef(giroArt11, 0, 1, 0);
 
 				glPushMatrix();//falangina 1
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 1
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt21, 0, 0, 1);
+						glRotatef(giroArt21, 0, 1, 0);
 
 						glPushMatrix();//falangeta 1
 							glTranslatef(1.0f, 0.0f, 0.0f);
@@ -176,21 +387,22 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 2
 		glTranslatef(1.5f, 0.5f, 0.0f);
-		glRotatef(giroNudillo2, 0, 0, 1);
+		glRotatef(giroNudillo2, 0, 1, 0);
+		glRotatef(giroNudillo2Z, 0, 0, 1);
 
 		glPushMatrix(); //Falange 2
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 2
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt12, 0, 0, 1);
+				glRotatef(giroArt12, 0, 1, 0);
 
 				glPushMatrix();//falangina 2
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 2
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt22, 0, 0, 1);
+						glRotatef(giroArt22, 0, 1, 0);
 
 						glPushMatrix();//falangeta 2
 							glTranslatef(1.0f, 0.0f, 0.0f);
@@ -218,21 +430,21 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 3
 		glTranslatef(1.5f, -0.5f, 0.0f);
-		glRotatef(giroNudillo3, 0, 0, 1);
+		glRotatef(giroNudillo3, 0, 1, 0);
 
 		glPushMatrix(); //Falange 3
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 3
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt13, 0, 0, 1);
+				glRotatef(giroArt13, 0, 1, 0);
 
 				glPushMatrix();//falangina 3
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 3
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt23, 0, 0, 1);
+						glRotatef(giroArt23, 0, 1, 0);
 
 						glPushMatrix();//falangeta 3
 						glTranslatef(1.0f, 0.0f, 0.0f);
@@ -261,21 +473,21 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 4
 		glTranslatef(1.5f, -1.5f, 0.0f);
-		glRotatef(giroNudillo4, 0, 0, 1);
+		glRotatef(giroNudillo4, 0, 1, 0);
 
 		glPushMatrix(); //Falange 4
 			glTranslatef(1.05f, 0.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 4
 				glTranslatef(1.0f, 0.0f, 0.0f);
-				glRotatef(giroArt14, 0, 0, 1);
+				glRotatef(giroArt14, 0, 1, 0);
 
 				glPushMatrix();//falangina 4
 					glTranslatef(1.0f, 0.0f, 0.0f);
 
 					glPushMatrix(); //Articulacion 2 dedo 4
 						glTranslatef(1.0f, 0.0f, 0.0f);
-						glRotatef(giroArt24, 0, 0, 1);
+						glRotatef(giroArt24, 0, 1, 0);
 
 						glPushMatrix();//falangeta 4
 							glTranslatef(1.0f, 0.0f, 0.0f);
@@ -303,14 +515,14 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 	glPushMatrix();// Nudillo 5
 		glTranslatef(0.0f, 2.5f, 0.0f);
-		glRotatef(giroNudillo5, 0, 0, 1);
+		glRotatef(giroNudillo5, 1, 0, 0);
 
 		glPushMatrix(); //Falange 5
 			glTranslatef(0.0f, 1.0f, 0.0f);
 
 			glPushMatrix(); //Articulacion 1 dedo 5
 				glTranslatef(0.0f, 1.0f, 0.0f);
-				glRotatef(giroArt15, 0, 0, 1);
+				glRotatef(giroArt15, 1, 0, 0);
 
 				glPushMatrix();//falangina 5
 					glTranslatef(0.0f, 1.0f, 0.0f);
@@ -338,6 +550,66 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glutSwapBuffers ( ); // Swap The Buffers
 }
 
+void animacion()
+{
+
+	//Movimiento del monito
+	if(play)
+	{		
+		
+		if(	i_curr_steps >= i_max_steps) //end of animation between frames?
+		{			
+			playIndex++;		
+			if(playIndex>FrameIndex-2)	//end of total animation?
+			{
+				printf("termina anim\n");
+				playIndex=0;
+				play=false;
+			}
+			else //Next frame interpolations
+			{
+				i_curr_steps = 0; //Reset counter
+				//Interpolation
+				interpolation();
+
+			}
+		}
+		else
+		{
+			//Draw animation
+			transZ += KeyFrame[playIndex].IncZ;
+			transX += KeyFrame[playIndex].IncX;
+			giroX += KeyFrame[playIndex].IncRotX;
+			giroY += KeyFrame[playIndex].IncRotY;
+			giroZ += KeyFrame[playIndex].IncRotZ;
+
+			giroNudillo1 += KeyFrame[playIndex].rotInc;
+			giroArt11 += KeyFrame[playIndex].rotInc2;
+			giroArt21 += KeyFrame[playIndex].rotInc3;
+			giroNudillo2 += KeyFrame[playIndex].rotInc4;
+			giroArt12 += KeyFrame[playIndex].rotInc5;
+			giroArt22 += KeyFrame[playIndex].rotInc6;
+			giroNudillo3 += KeyFrame[playIndex].rotInc7;
+			giroArt13 += KeyFrame[playIndex].rotInc8;
+			giroArt23 += KeyFrame[playIndex].rotInc9;
+			giroNudillo4 += KeyFrame[playIndex].rotInc10;
+			giroArt14 += KeyFrame[playIndex].rotInc11;
+			giroArt24 += KeyFrame[playIndex].rotInc12;
+			giroNudillo5 += KeyFrame[playIndex].rotInc13;
+			giroArt15 += KeyFrame[playIndex].rotInc14;
+			giroNudillo1Z += KeyFrame[playIndex].rotInc15;
+			giroNudillo2Z += KeyFrame[playIndex].rotInc16;
+
+
+			i_curr_steps++;
+		}
+		
+	}
+
+
+	glutPostRedisplay();
+}
+
 void reshape ( int width , int height )   // Creamos funcion Reshape
 {
   if (height==0)										// Prevenir division entre cero
@@ -362,81 +634,161 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 {
 	switch ( key ) {
 		case 'w':
-		case 'W':
 			transZ +=0.2f;
 			break;
-		case 's':
-		case 'S':
+		case 'W':
 			transZ -=0.2f;
 			break;
-		case 'a':
-		case 'A':
+		case 'q':
 			transX +=0.2f;
 			break;
-		case 'd':
-		case 'D':
+		case 'Q':
 			transX -=0.2f;
 			break;
 		case 'z':
-		case 'Z':
 			giroNudillo1 += 10.0f;
 			break;
+		case 'Z':
+			giroNudillo1 -= 10.0f;
+			break;
 		case 'x':
-		case 'X':
 			giroArt11 += 10.0f;
 			break;
+		case 'X':
+			giroArt11 -= 10.0f;
+			break;
 		case 'c':
-		case 'C':
 			giroArt21 += 10.0f;
 			break;
+		case 'C':
+			giroArt21 -= 10.0f;
+			break;
 		case 'v':
-		case 'V':
 			giroNudillo2 += 10.0f;
 			break;
+		case 'V':
+			giroNudillo2 -= 10.0f;
+			break;
 		case 'b':
-		case 'B':
 			giroArt12 += 10.0f;
 			break;
+		case 'B':
+			giroArt12 -= 10.0f;
+			break;
 		case 'n':
-		case 'N':
 			giroArt22 += 10.0f;
 			break;
+		case 'N':
+			giroArt22 -= 10.0f;
+			break;
 		case 't':
-		case 'T':
 			giroNudillo3 += 10.0f;
 			break;
+		case 'T':
+			giroNudillo3 -= 10.0f;
+			break;
 		case 'y':
-		case 'Y':
 			giroArt13 += 10.0f;
 			break;
+		case 'Y':
+			giroArt13 -= 10.0f;
+			break;
 		case 'u':
-		case 'U':
 			giroArt23 += 10.0f;
 			break;
+		case 'U':
+			giroArt23 -= 10.0f;
+			break;
 		case 'i':
-		case 'I':
 			giroNudillo4 += 10.0f;
 			break;
+		case 'I':
+			giroNudillo4 -= 10.0f;
+			break;
 		case 'o':
-		case 'O':
 			giroArt14 += 10.0f;
 			break;
+		case 'O':
+			giroArt14 -= 10.0f;
+			break;
 		case 'p':
-		case 'P':
 			giroArt24 += 10.0f;
 			break;
-		case 'k':
-		case 'K':
+		case 'P':
+			giroArt24 -= 10.0f;
+			break;
+		case 'h':
+			giroNudillo5 -= 10.0f;
+			break;
+		case 'H':
 			giroNudillo5 += 10.0f;
 			break;
-		case 'l':
-		case 'L':
+		case 'j':
+			giroArt15 -= 10.0f;
+			break;
+		case 'J':
 			giroArt15 += 10.0f;
 			break;
-		case 'j':
-		case 'J':
-			giro += 10.0f;
+		case 'a':
+			giroX += 10.0f;
 			break;
+		case 'A':
+			giroX -= 10.0f;
+			break;
+		case 's':
+			giroY += 10.0f;
+			break;
+		case 'S':
+			giroY -= 10.0f;
+			break;
+		case 'd':
+			giroZ += 10.0f;
+			break;
+		case 'D':
+			giroZ -= 10.0f;
+			break;
+		case 'e':
+			giroNudillo1Z += 10.0f;
+			break;
+		case 'E':
+			giroNudillo1Z -= 10.0f;
+			break;
+		case 'r':
+			giroNudillo2Z += 10.0f;
+			break;
+		case 'R':
+			giroNudillo2Z -= 10.0f;
+			break;
+
+		case 'k':		//
+		case 'K':
+			if(FrameIndex<MAX_FRAMES)
+			{
+				saveFrame();
+			}
+
+			break;
+
+		case 'l':						
+		case 'L':
+			if(play==false && (FrameIndex>1))
+			{
+
+				resetElements();
+				//First Interpolation				
+				interpolation();
+
+				play=true;
+				playIndex=0;
+				i_curr_steps = 0;
+			}
+			else
+			{
+				play=false;
+			}
+			break;
+
+
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
 		break;        
@@ -468,22 +820,72 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
 }
 
 
+void menuKeyFrame( int id)
+{
+	switch (id)
+	{
+		case 0:	//Save KeyFrame
+			if(FrameIndex<MAX_FRAMES)
+			{
+				saveFrame();
+			}
+			break;
+
+		case 1:	//Play animation
+			if(play==false && FrameIndex >1)
+			{
+
+				resetElements();
+				//First Interpolation
+				interpolation();
+
+				play=true;
+				playIndex=0;
+				i_curr_steps = 0;
+			}
+			else
+			{
+				play=false;
+			}
+			break;
+
+
+	}
+}
+
+void menu( int id)
+{
+	
+}
+
 int main ( int argc, char** argv )   // Main Function
 {
+  int submenu;
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
   screenW = glutGet(GLUT_SCREEN_WIDTH);
   screenH = glutGet(GLUT_SCREEN_HEIGHT);
-  glutInitWindowSize  (500, 500);	// TamaÒo de la Ventana
+  glutInitWindowSize  (500, 500);	// Tama√±o de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
-  glutCreateWindow    ("Practica 5"); // Nombre de la Ventana
+  glutCreateWindow    ("Reporte Practica 11"); // Nombre de la Ventana
   printf("Resolution H: %i \n", screenW);
   printf("Resolution V: %i \n", screenH);
   InitGL ();						// Parametros iniciales de la aplicacion
-  glutDisplayFunc     ( display );  //Indicamos a Glut funciÛn de dibujo
-  glutReshapeFunc     ( reshape );	//Indicamos a Glut funciÛn en caso de cambio de tamano
-  glutKeyboardFunc    ( keyboard );	//Indicamos a Glut funciÛn de manejo de teclado
+  glutDisplayFunc     ( display );  //Indicamos a Glut funci√≥n de dibujo
+  glutReshapeFunc     ( reshape );	//Indicamos a Glut funci√≥n en caso de cambio de tamano
+  glutKeyboardFunc    ( keyboard );	//Indicamos a Glut funci√≥n de manejo de teclado
   glutSpecialFunc     ( arrow_keys );	//Otras
+  glutIdleFunc		  ( animacion );
+
+  submenu = glutCreateMenu	  ( menuKeyFrame );
+  glutAddMenuEntry	  ("Guardar KeyFrame", 0);
+  glutAddMenuEntry	  ("Reproducir Animacion", 1);
+  glutCreateMenu	  ( menu );
+  glutAddSubMenu	  ("Animacion Monito", submenu);
+ 
+  glutAttachMenu	  (GLUT_RIGHT_BUTTON);
+
+
   glutMainLoop        ( );          // 
 
   return 0;
