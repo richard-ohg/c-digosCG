@@ -152,7 +152,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glRotatef(rotZ, 0, 0, 1);
 
 	glPushMatrix(); // Dibujamos tetraedro
-	//glTranslatef(-2.0f, 0.0f, 0); 
+	glTranslatef(-2.0f, 0.0f, 0); 
 	glScalef(3, 3, 3);
 	tetraedro();
 	glPopMatrix(); 
@@ -160,7 +160,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glPushMatrix(); 
 	glTranslatef(2.0f, 0.0f, 0); 
 	glScalef(3, 3, 3);
-	//octaedro();
+	octaedro();
 	glPopMatrix(); 
 
 
