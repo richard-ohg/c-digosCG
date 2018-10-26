@@ -19,10 +19,10 @@ z - giro z+ izq
 x - giro z- izq
 c - giro z+ der
 v - giro z- der
-u - giro x+ izq
-i - giro x- izq
-o - giro x+ der
-p - giro x- der
+u - giro y+ izq
+i - giro y- izq
+o - giro y+ der
+p - giro y- der
 n - giro+ cintura
 m - giro- cintura
 
