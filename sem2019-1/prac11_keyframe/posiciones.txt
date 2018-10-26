@@ -1,0 +1,62 @@
+frameindex 0
+movBrazoDerZ guardado: 0.000000 
+movBrazoDerX guardado: 0.000000 
+movBrazoIzqZ guardado: 0.000000 
+movBrazoIzqX guardado: 0.000000 
+movCintura guardado: 0.000000
+
+frameindex 1
+movBrazoDerZ guardado: -137.000000 
+movBrazoDerX guardado: -38.000000 
+movBrazoIzqZ guardado: 68.000000 
+movBrazoIzqX guardado: 51.000000 
+movCintura guardado: -9.000000
+
+frameindex 2
+movBrazoDerZ guardado: -60.000000 
+movBrazoDerX guardado: 39.000000 
+movBrazoIzqZ guardado: 114.000000 
+movBrazoIzqX guardado: -34.000000 
+movCintura guardado: 12.000000
+
+frameindex 3
+movBrazoDerZ guardado: -156.000000 
+movBrazoDerX guardado: -52.000000 
+movBrazoIzqZ guardado: 43.000000 
+movBrazoIzqX guardado: 51.000000 
+movCintura guardado: -2.000000
+
+frameindex 4
+movBrazoDerZ guardado: -55.000000 
+movBrazoDerX guardado: -52.000000 
+movBrazoIzqZ guardado: 130.000000 
+movBrazoIzqX guardado: 51.000000 
+movCintura guardado: 17.000000
+
+frameindex 5
+movBrazoDerZ guardado: -121.000000 
+movBrazoDerX guardado: 50.000000 
+movBrazoIzqZ guardado: 68.000000 
+movBrazoIzqX guardado: -22.000000 
+movCintura guardado: -14.000000 
+
+frameindex 6
+movBrazoDerZ guardado: -40.000000 
+movBrazoDerX guardado: -66.000000 
+movBrazoIzqZ guardado: 144.000000 
+movBrazoIzqX guardado: 66.000000 
+movCintura guardado: 2.000000 
+
+frameindex 7
+movBrazoDerZ guardado: -158.000000 
+movBrazoDerX guardado: -66.000000 
+movBrazoIzqZ guardado: 45.000000 
+movBrazoIzqX guardado: 66.000000 
+movCintura guardado: -16.000000
+
+frameindex 8
+movBrazoDerZ guardado: -42.000000 
+movBrazoDerX guardado: 46.000000 
+movBrazoIzqZ guardado: 113.000000 
+movBrazoIzqX guardado: -64.000000 
+movCintura guardado: 12.000000

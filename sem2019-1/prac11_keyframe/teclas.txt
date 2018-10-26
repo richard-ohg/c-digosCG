@@ -1,0 +1,28 @@
+W - delante
+S - atras
+A - izq
+D - der
+Re pag - arriba
+Av pag - abajo
+k - guardar frame
+l - correr frame
+y - mover fondo
+Y - mover atras
+g - mover derecha 
+G - mover izq
+o - mover rod
+O - mov rod
+g - giro mono
+G - giro mono
+
+z - giro z+ izq
+x - giro z- izq
+c - giro z+ der
+v - giro z- der
+u - giro x+ izq
+i - giro x- izq
+o - giro x+ der
+p - giro x- der
+n - giro+ cintura
+m - giro- cintura
+
