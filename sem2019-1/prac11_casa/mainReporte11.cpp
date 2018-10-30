@@ -45,27 +45,14 @@ CFiguras fig5;	//Casa01
 CFiguras fig6;
 
 CFiguras fig7; //Para el monito
-CFiguras fig8;
+CFiguras fig8; // cuartos
 
-
-//Animación del coche
-float movKit = 0.0;
-float giroLlanta= 0.0;
-float giroAuto = 0.0;
-bool g_fanimacion = false;
-bool g_fanimacion2 = false;
-bool sube = false;
-bool recto = false;
-bool baja = false;
 
 //NEW// Keyframes
 float posX = 0, posY = 2.5, posZ = -3.5, rotRodIzq = 0;
-float giroMonito = 0;
-float movBrazoDerZ = 0.0;
-float movBrazoIzqZ = 0.0;
-float movBrazoDerY = 0.0;
-float movBrazoIzqY = 0.0;
-float movCintura = 0.0;
+float giroPuerta = 0;
+float giroVentana = 0;
+
 
 #define MAX_FRAMES 20
 int i_max_steps = 90;
@@ -80,21 +67,12 @@ typedef struct _frame
 	float incX;		//Variable para IncrementoX
 	float incY;		//Variable para IncrementoY
 	float incZ;		//Variable para IncrementoZ
-	float rotRodIzq;
-	float rotInc;
-	float giroMonito;
-	float giroMonitoInc;
-	float movBrazoDerZ;
-	float movBrazoDerIncZ;
-	float movBrazoIzqZ;
-	float movBrazoIzqIncZ;
-	float movBrazoDerY;
-	float movBrazoDerIncY;
-	float movBrazoIzqY;
-	float movBrazoIzqIncY;
-	float movCintura;
-	float movCinturaInc;
+	float giroPuerta;
+	float giroPuertaInc;
+	float giroVentana;
+	float giroVentanaInc;
 
+	
 
 }FRAME;
 
@@ -109,107 +87,6 @@ int playIndex = 0;
 int w = 500, h = 500;
 int frame = 0, time, timebase = 0;
 char s[30];
-
-
-void monito()
-{
-	//glNewList(1, GL_COMPILE);
-	glPushMatrix();//Pecho
-	glScalef(0.5, 0.5, 0.5);
-	fig7.prisma(2.0, 2.0, 1, text2.GLindex);
-
-	glPushMatrix();//Cuello
-	glTranslatef(0, 1.0, 0.0);
-	fig7.cilindro(0.25, 0.25, 15, 0);
-	glPushMatrix();//Cabeza
-	glTranslatef(0, 1.0, 0);
-	fig7.esfera(0.75, 15, 15, 0);
-	glPopMatrix();
-	glPopMatrix();
-
-	glPushMatrix(); //Brazo derecho-->
-	glTranslatef(1.25, 0.65, 0);
-	fig7.esfera(0.5, 12, 12, 0);
-	glPushMatrix();
-	glTranslatef(0.25, 0, 0);
-	glRotatef(movBrazoDerZ, 0.0, 0.0, 1.0);
-	glRotatef(movBrazoDerY, 0.0, 1.0, 0.0);
-	//glRotatef(-61, 0.0, 0.0, 1.0);
-	//glRotatef(-45, 0, 1, 0);
-	glTranslatef(1.25, 0, 0);
-	fig7.prisma(0.7, 2.5, 0.7, 0);
-	glPopMatrix();
-	glPopMatrix();
-
-	glPushMatrix(); //Brazo izquierdo <--
-	glTranslatef(-1.25, 0.65, 0);
-	fig7.esfera(0.5, 12, 12, 0);
-	glPushMatrix();
-	glTranslatef(-0.25, 0, 0);
-	glRotatef(movBrazoIzqZ, 0.0, 0.0, 1.0);
-	glRotatef(movBrazoIzqY, 0.0, 1.0, 0.0);
-	//glRotatef(61, 0.0, 0.0, 1.0);
-	//glRotatef(45, 0, 1, 0);
-	//glRotatef(25, 0, 0, 1);
-	//glRotatef(25, 1, 0, 0);
-	glTranslatef(-1.25, 0, 0);
-	fig7.prisma(0.7, 2.5, 0.7, 0);
-	glPopMatrix();
-	glPopMatrix();
-
-	glPushMatrix();//Cintura
-	glColor3f(0, 0, 1);
-	glTranslatef(0, -1.5, 0);
-	glRotatef(movCintura, 0.0, 0.0, 1.0);
-	fig7.prisma(1, 2, 1, 0);
-
-	glPushMatrix(); //Pie Derecho -->
-	glTranslatef(0.75, -0.5, 0);
-	glRotatef(-15, 1, 0, 0);
-	glTranslatef(0, -0.5, 0);
-	fig7.prisma(1.0, 0.5, 1, 0);
-
-	glPushMatrix();
-	glTranslatef(0, -0.5, 0);
-	glRotatef(15, 1, 0, 0);
-	glTranslatef(0, -0.75, 0);
-	fig7.prisma(1.5, 0.5, 1, 0);
-
-	glPushMatrix();
-	glTranslatef(0, -0.75, 0.3);
-	fig7.prisma(0.2, 1.2, 1.5, 0);
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
-
-
-	glPushMatrix(); //Pie Izquierdo -->
-	glTranslatef(-0.75, -0.5, 0);
-	glRotatef(-5, 1, 0, 0);
-	glTranslatef(0, -0.5, 0);
-	fig7.prisma(1.0, 0.5, 1, 0);
-
-	glPushMatrix();
-	glTranslatef(0, -0.5, 0);
-	glRotatef(15 + rotRodIzq, 1, 0, 0);
-	glTranslatef(0, -0.75, 0);
-	fig7.prisma(1.5, 0.5, 1, 0);
-
-	glPushMatrix();
-	glTranslatef(0, -0.75, 0.3);
-	fig7.prisma(0.2, 1.2, 1.5, 0);
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
-
-
-	glPopMatrix();
-
-
-	glColor3f(1, 1, 1);
-	glPopMatrix();
-	//glEndList();
-}
 
 
 			
@@ -288,143 +165,40 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	
 
 	}
-	/*
-	KeyFrame[0].posX = 0;
-	KeyFrame[0].posY = 2.5;
-	KeyFrame[0].posZ = -3.5;
-	KeyFrame[0].rotRodIzq = 0;
-	KeyFrame[0].giroMonito = 0;
-	KeyFrame[0].movBrazoDerZ = 0;
-
-	KeyFrame[1].posX = 20;
-	KeyFrame[1].posY = 2.5;
-	KeyFrame[1].posZ = -3.5;
-	KeyFrame[1].rotRodIzq = 60;
-	KeyFrame[1].giroMonito = -90.0;
-	KeyFrame[1].movBrazoDerZ = 40;
-
-	KeyFrame[2].posX = 20;
-	KeyFrame[2].posY = 2.5;
-	KeyFrame[2].posZ = 4.0;
-	KeyFrame[2].rotRodIzq = -20.0;
-	KeyFrame[2].giroMonito = 0;
-	KeyFrame[2].movBrazoDerZ = 0;
-
-	KeyFrame[3].posX = 20;
-	KeyFrame[3].posY = 2.5;
-	KeyFrame[3].posZ = 4.0;
-	KeyFrame[3].rotRodIzq = 40.0;
-	KeyFrame[3].giroMonito = 45;
-	KeyFrame[3].movBrazoDerZ = 90;
-
-	KeyFrame[4].posX = 20;
-	KeyFrame[4].posY = 2.5;
-	KeyFrame[4].posZ = 4.0;
-	KeyFrame[4].rotRodIzq = -40.0;
-	KeyFrame[4].giroMonito = -45;
-	KeyFrame[4].movBrazoDerZ = -90;
-
-	//NEW//////////////////NEW//////////////////NEW//////////////////
 	*/
 
-	KeyFrame[0].movBrazoDerZ = 0.000000; 
-	KeyFrame[0].movBrazoDerY = 0.000000; 
-	KeyFrame[0].movBrazoIzqZ = 0.000000; 
-	KeyFrame[0].movBrazoIzqY = 0.000000; 
-	KeyFrame[0].movCintura = 0.000000;
-	KeyFrame[0].posX = 0.000000; 
-	KeyFrame[0].posY = 2.500000; 
-	KeyFrame[0].posZ = -3.500000;
+	KeyFrame[0].giroVentana = 0.000000; 
+	KeyFrame[0].giroPuerta = 0.000000;
 
-	KeyFrame[1].movBrazoDerZ = 0.000000; 
-	KeyFrame[1].movBrazoDerY = 0.000000; 
-	KeyFrame[1].movBrazoIzqZ = 0.000000; 
-	KeyFrame[1].movBrazoIzqY = 0.000000; 
-	KeyFrame[1].movCintura = 0.000000;
-	KeyFrame[1].posX = 0.000000; 
-	KeyFrame[1].posY = 2.500000; 
-	KeyFrame[1].posZ = -2.500000;
+	KeyFrame[1].giroVentana = 78.000000;	
+	KeyFrame[1].giroPuerta = 0.000000;
 
-	KeyFrame[2].movBrazoDerZ = -137.000000; 
-	KeyFrame[2].movBrazoDerY = -38.000000; 
-	KeyFrame[2].movBrazoIzqZ = 68.000000; 
-	KeyFrame[2].movBrazoIzqY = 51.000000; 
-	KeyFrame[2].movCintura = -9.000000;
-	KeyFrame[2].posX = 0.000000; 
-	KeyFrame[2].posY = 2.500000; 
-	KeyFrame[2].posZ = -2.500000;
+	KeyFrame[2].giroVentana = 78.000000; 
+	KeyFrame[2].giroPuerta = -74.000000;
 
-	KeyFrame[3].movBrazoDerZ = -60.000000; 
-	KeyFrame[3].movBrazoDerY = 39.000000; 
-	KeyFrame[3].movBrazoIzqZ = 114.000000; 
-	KeyFrame[3].movBrazoIzqY = -34.000000; 
-	KeyFrame[3].movCintura = 12.000000; 
-	KeyFrame[3].posX = 0.000000; 
-	KeyFrame[3].posY = 2.500000;
-	KeyFrame[3].posZ = -2.500000;
+	KeyFrame[3].giroVentana = 78.000000; 
+	KeyFrame[3].giroPuerta = 74.000000;
 
-	KeyFrame[4].movBrazoDerZ = -156.000000 ; 
-	KeyFrame[4].movBrazoDerY = -52.000000; 
-	KeyFrame[4].movBrazoIzqZ = 43.000000; 
-	KeyFrame[4].movBrazoIzqY = 51.000000; 
-	KeyFrame[4].movCintura = -2.000000; 
-	KeyFrame[4].posX = 0.000000; 
-	KeyFrame[4].posY = 2.500000;
-	KeyFrame[4].posZ = -2.500000;
+	KeyFrame[4].giroVentana = 78.000000; 
+	KeyFrame[4].giroPuerta = 0.000000;
 
-	KeyFrame[5].movBrazoDerZ = -55.000000; 
-	KeyFrame[5].movBrazoDerY = -52.000000; 
-	KeyFrame[5].movBrazoIzqZ = 130.000000; 
-	KeyFrame[5].movBrazoIzqY = 51.000000; 
-	KeyFrame[5].movCintura = 17.000000; 
-	KeyFrame[5].posX = 0.000000; 
-	KeyFrame[5].posY = 2.500000;
-	KeyFrame[5].posZ = -2.500000;
+	KeyFrame[5].giroVentana = 78.000000; 
+	KeyFrame[5].giroPuerta = -59.000000;
 
-	KeyFrame[6].movBrazoDerZ = -121.000000; 
-	KeyFrame[6].movBrazoDerY = 50.000000; 
-	KeyFrame[6].movBrazoIzqZ = 68.000000; 
-	KeyFrame[6].movBrazoIzqY = -22.000000; 
-	KeyFrame[6].movCintura = -14.000000; 
-	KeyFrame[6].posX = 0.000000; 
-	KeyFrame[6].posY = 2.500000;
-	KeyFrame[6].posZ = -2.500000;
+	KeyFrame[6].giroVentana = 78.000000; 
+	KeyFrame[6].giroPuerta = 0.000000;
 
-	KeyFrame[7].movBrazoDerZ = -40.000000; 
-	KeyFrame[7].movBrazoDerY = -66.000000; 
-	KeyFrame[7].movBrazoIzqZ = 144.000000; 
-	KeyFrame[7].movBrazoIzqY = 66.000000; 
-	KeyFrame[7].movCintura = 2.000000;
-	KeyFrame[7].posX = 0.000000; 
-	KeyFrame[7].posY = 2.500000; 
-	KeyFrame[7].posZ = -2.500000;
+	KeyFrame[7].giroVentana = 4.000000; 
+	KeyFrame[7].giroPuerta = 0.000000; 
 
-	KeyFrame[8].movBrazoDerZ = -158.000000; 
-	KeyFrame[8].movBrazoDerY = -66.000000; 
-	KeyFrame[8].movBrazoIzqZ = 45.000000; 
-	KeyFrame[8].movBrazoIzqY = 66.000000; 
-	KeyFrame[8].movCintura = -16.000000; 
-	KeyFrame[8].posX = 0.000000;
-	KeyFrame[8].posY = 2.500000;
-	KeyFrame[8].posZ = -2.500000;
+	KeyFrame[8].giroVentana = -75.000000; 
+	KeyFrame[8].giroPuerta = 0.000000; 
 
-	KeyFrame[9].movBrazoDerZ = -42.000000; 
-	KeyFrame[9].movBrazoDerY = 46.000000; 
-	KeyFrame[9].movBrazoIzqZ = 113.000000; 
-	KeyFrame[9].movBrazoIzqY = -64.000000; 
-	KeyFrame[9].movCintura = 12.000000; 
-	KeyFrame[9].posX = 0.000000; 
-	KeyFrame[9].posY = 2.500000;
-	KeyFrame[9].posZ = -2.500000;
+	KeyFrame[9].giroVentana = 53.000000; 
+	KeyFrame[9].giroPuerta = 0.000000;
 
-	KeyFrame[10].movBrazoDerZ = 0.000000; 
-	KeyFrame[10].movBrazoDerY = 0.000000; 
-	KeyFrame[10].movBrazoIzqZ = 0.000000; 
-	KeyFrame[10].movBrazoIzqY = 0.000000; 
-	KeyFrame[10].movCintura = 0.000000; 
-	KeyFrame[10].posX = 0.000000; 
-	KeyFrame[10].posY = 2.500000;
-	KeyFrame[10].posZ = -3.500000;
+	KeyFrame[10].giroVentana = 0.000000; 
+	KeyFrame[10].giroPuerta = 0.000000;
 
 }
 
@@ -486,16 +260,20 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					fig8.prisma(10,10,1,text3.GLindex); //pared frente - 1er cuarto - abajo ventana
 				glPopMatrix();
 				glPushMatrix();
-					glTranslatef(4,4,0);
-					//glColor3f(0,1,1);
-					//glBindTexture(GL_TEXTURE_2D, textura1);   // choose the texture to use.
-					glEnable(GL_ALPHA_TEST);
-					glAlphaFunc(GL_GREATER,0.1);
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-					fig8.prisma(8,8,0,text2.GLindex); //pared frente - 1er cuarto - ventana
-					glDisable(GL_ALPHA_TEST);
-					glDisable(GL_BLEND);
+					glTranslatef(0,4,0);
+					glRotatef(giroVentana,0,1,0);
+					glPushMatrix();
+						glTranslatef(4,0,0);
+						//glColor3f(0,1,1);
+						//glBindTexture(GL_TEXTURE_2D, textura1);   // choose the texture to use.
+						glEnable(GL_ALPHA_TEST);
+						glAlphaFunc(GL_GREATER,0.1);
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+						fig8.prisma(8,8,0,text2.GLindex); //pared frente - 1er cuarto - ventana
+						glDisable(GL_ALPHA_TEST);
+						glDisable(GL_BLEND);
+					glPopMatrix();
 				glPopMatrix();
 				glPushMatrix();
 					glTranslatef(5,9,0);
@@ -538,10 +316,14 @@ void display ( void )   // Creamos la funcion donde se dibuja
 					fig8.prisma(10,6,1,text3.GLindex); // Pared enmedio - arriba
 				glPopMatrix();
 				glPushMatrix();
-					glTranslatef(0,-5,0);
-					//glColor3f(1,1,0);
-					glDisable(GL_LIGHTING);
-					fig8.prisma(10,6,1,text4.GLindex); // Pared enmedio - puerta
+					glTranslatef(3,-5,0);
+					glRotatef(giroPuerta,0,1,0);
+					glPushMatrix();
+						glTranslatef(-3,0,0);
+						//glColor3f(1,1,0);
+						glDisable(GL_LIGHTING);
+						fig8.prisma(10,6,1,text4.GLindex); // Pared enmedio - puerta
+					glPopMatrix();
 				glPopMatrix();
 				//fig8.prisma(20,20,1,0); // Pared enmedio
 				
@@ -586,32 +368,18 @@ void animacion()
 				i_curr_steps = 0; //Reset counter
 								  //Interpolation
 				KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoDerIncZ = (KeyFrame[playIndex + 1].movBrazoDerZ - KeyFrame[playIndex].movBrazoDerZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoIzqIncZ = (KeyFrame[playIndex + 1].movBrazoIzqZ - KeyFrame[playIndex].movBrazoIzqZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoDerIncY = (KeyFrame[playIndex + 1].movBrazoDerY - KeyFrame[playIndex].movBrazoDerY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoIzqIncY = (KeyFrame[playIndex + 1].movBrazoIzqY - KeyFrame[playIndex].movBrazoIzqY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movCinturaInc = (KeyFrame[playIndex + 1].movCintura - KeyFrame[playIndex].movCintura) / i_max_steps;		//100 frames
-
+				KeyFrame[playIndex].giroVentanaInc = (KeyFrame[playIndex + 1].giroVentana - KeyFrame[playIndex].giroVentana) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].giroPuertaInc = (KeyFrame[playIndex + 1].giroPuerta - KeyFrame[playIndex].giroPuerta) / i_max_steps;		//100 frames
+				
 				printf("Inc x: %f", KeyFrame[playIndex].incX);
 			}
 		}
 		else
 		{	//Draw information
 			posX += KeyFrame[playIndex].incX;
-			posY += KeyFrame[playIndex].incY;
-			posZ += KeyFrame[playIndex].incZ;
-
-			rotRodIzq += KeyFrame[playIndex].rotInc;
-			giroMonito += KeyFrame[playIndex].giroMonitoInc;
-			movBrazoDerZ += KeyFrame[playIndex].movBrazoDerIncZ;
-			movBrazoIzqZ += KeyFrame[playIndex].movBrazoIzqIncZ;
-			movBrazoDerY += KeyFrame[playIndex].movBrazoDerIncY;
-			movBrazoIzqY += KeyFrame[playIndex].movBrazoIzqIncY;
-			movCintura += KeyFrame[playIndex].movCinturaInc;
+			giroVentana += KeyFrame[playIndex].giroVentanaInc;
+			giroPuerta += KeyFrame[playIndex].giroPuertaInc;
+			
 			i_curr_steps++;
 		}
 
@@ -678,24 +446,12 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 				printf("frameindex %d\n", FrameIndex);
 
 				KeyFrame[FrameIndex].posX = posX;
-				KeyFrame[FrameIndex].posY = posY;
-				KeyFrame[FrameIndex].posZ = posZ;
+				KeyFrame[FrameIndex].giroVentana = giroVentana;
+				KeyFrame[FrameIndex].giroPuerta = giroPuerta;
 
-				KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
-				KeyFrame[FrameIndex].giroMonito = giroMonito;
-				KeyFrame[FrameIndex].movBrazoDerZ = movBrazoDerZ;
-				KeyFrame[FrameIndex].movBrazoDerY = movBrazoDerY;
-				KeyFrame[FrameIndex].movBrazoIzqZ = movBrazoIzqZ;
-				KeyFrame[FrameIndex].movBrazoIzqY = movBrazoIzqY;
-				KeyFrame[FrameIndex].movCintura = movCintura;
-				printf("KeyFrame[%i].movBrazoDerZ = %f \n", FrameIndex, movBrazoDerZ);
-				printf("KeyFrame[%i].movBrazoDerY = %f \n", FrameIndex, movBrazoDerY);
-				printf("KeyFrame[%i].movBrazoIzqZ = %f \n", FrameIndex, movBrazoIzqZ);
-				printf("KeyFrame[%i].movBrazoIzqY = %f \n", FrameIndex, movBrazoIzqY);
-				printf("KeyFrame[%i].movCintura = %f \n", FrameIndex, movCintura);
-				printf("KeyFrame[%i].posX = %f \n", FrameIndex, posX);
-				printf("KeyFrame[%i].posY = %f \n", FrameIndex, posY);
-				printf("KeyFrame[%i].posZ = %f \n", FrameIndex, posZ);
+				printf("KeyFrame[%i].giroVentana = %f \n", FrameIndex, giroVentana);
+				printf("KeyFrame[%i].giroPuerta = %f \n", FrameIndex, giroPuerta);
+				
 
 				FrameIndex++;
 			}
@@ -708,28 +464,12 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			{
 
 				posX = KeyFrame[0].posX;
-				posY = KeyFrame[0].posY;
-				posZ = KeyFrame[0].posZ;
-				rotRodIzq = KeyFrame[0].rotRodIzq;
-				giroMonito = KeyFrame[0].giroMonito;
-				movBrazoDerZ = KeyFrame[0].movBrazoDerZ;
-				movBrazoDerZ = KeyFrame[0].movBrazoDerY;
-				movBrazoDerZ = KeyFrame[0].movBrazoIzqZ;
-				movBrazoDerZ = KeyFrame[0].movBrazoIzqY;
-				movCintura = KeyFrame[0].movCintura;
 
 				//First Interpolation
 				KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoDerIncZ = (KeyFrame[playIndex + 1].movBrazoDerZ - KeyFrame[playIndex].movBrazoDerZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoDerIncY = (KeyFrame[playIndex + 1].movBrazoDerY - KeyFrame[playIndex].movBrazoDerY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoIzqIncZ = (KeyFrame[playIndex + 1].movBrazoIzqZ - KeyFrame[playIndex].movBrazoIzqZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoIzqIncY = (KeyFrame[playIndex + 1].movBrazoIzqY - KeyFrame[playIndex].movBrazoIzqY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movCinturaInc = (KeyFrame[playIndex + 1].movCintura - KeyFrame[playIndex].movCintura) / i_max_steps;		//100 frames
-
+				KeyFrame[playIndex].giroVentanaInc = (KeyFrame[playIndex + 1].giroVentana - KeyFrame[playIndex].giroVentana) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].giroPuertaInc = (KeyFrame[playIndex + 1].giroPuerta - KeyFrame[playIndex].giroPuerta) / i_max_steps;		//100 frames
+				
 				play = true;
 				playIndex = 0;
 				i_curr_steps = 0;
@@ -757,67 +497,25 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			posX--;
 			//printf("%f \n", posX);
 			break;
-
-		case 'c':
-		case 'C':
-			movBrazoDerZ++;
-			printf("movBrazoDerZ: %f \n", movBrazoDerZ);
-			break;
 		case 'v':
 		case 'V':
-			movBrazoDerZ--;
-			printf("movBrazoDerZ: %f \n", movBrazoDerZ);
+			giroVentana++;
+			printf("giroVentana: %f \n", giroVentana);
 			break;
-
-		case 'z':
-		case 'Z':
-			movBrazoIzqZ++;
-			printf("movBrazoIzqZ: %f \n", movBrazoIzqZ);
-			break;
-		case 'x':
-		case 'X':
-			movBrazoIzqZ--;
-			printf("movBrazoIzqZ: %f \n", movBrazoIzqZ);
-			break;
-		case 'o':
-		case 'O':
-			movBrazoDerY++;
-			printf("movBrazoDerY: %f \n", movBrazoDerY);
-			break;
-		case 'p':
-		case 'P':
-			movBrazoDerY--;
-			printf("movBrazoDerY: %f \n", movBrazoDerY);
-			break;
-		case 'u':
-		case 'U':
-			movBrazoIzqY++;
-			printf("movBrazoIzqY: %f \n", movBrazoIzqY);
-			break;
-		case 'i':
-		case 'I':
-			movBrazoIzqY--;
-			printf("movBrazoIzqY: %f \n", movBrazoIzqY);
+		case 'b':
+		case 'B':
+			giroVentana--;
+			printf("giroVentana: %f \n", giroVentana);
 			break;
 		case 'n':
 		case 'N':
-			movCintura++;
-			printf("movCintura: %f \n", movCintura);
+			giroPuerta++;
+			printf("giroPuerta: %f \n", giroPuerta);
 			break;
 		case 'm':
 		case 'M':
-			movCintura--;
-			printf("movCintura: %f \n", movCintura);
-			break;
-
-		case 'b':
-			giroMonito++;
-			//printf("%f \n", giroMonito);
-			break;
-
-		case 'B':
-			giroMonito--;
-			//printf("%f \n", giroMonito);
+			giroPuerta--;
+			printf("giroPuerta: %f \n", giroPuerta);
 			break;
 
 		case 27:        // Cuando Esc es presionado...
