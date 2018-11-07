@@ -1,0 +1,13 @@
+W - delante
+S - atras
+A - izq
+D - der
+Re pag - arriba
+Av pag - abajo
+k - guardar frame
+l - correr frame
+
+v - mover ventana fondo
+b - mover ventana delante
+n - mover puerta fondo
+m - mover puerta delante
